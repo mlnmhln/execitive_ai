@@ -185,8 +185,7 @@ a {
 }
 
 .brand {
-  gap: 14px;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 600;
   letter-spacing: 0;
 }
@@ -205,7 +204,7 @@ a {
 .hero-mark {
   width: 76px;
   height: 76px;
-  margin: 0 auto 28px;
+  margin: 0 auto 46px;
 }
 
 .logo-img {
@@ -308,15 +307,17 @@ a {
 }
 
 .header-cta {
-  min-width: 172px;
-  font-size: calc(var(--button-font-size) - 2px);
+  min-width: 154px;
+  min-height: 42px;
+  padding: 0 22px;
+  font-size: 14px;
 }
 
 .hero {
   display: flex;
   justify-content: center;
   min-height: calc(100vh - 78px);
-  padding: 25px 24px 150px;
+  padding: 100px 24px 150px;
 }
 
 .hero-content {
@@ -326,7 +327,7 @@ a {
 
 h1 {
   margin: 0 0 36px;
-  font-size: clamp(84px, 7.1vw, 122px);
+  font-size: clamp(78px, 6.4vw, 110px);
   line-height: 0.96;
   font-weight: 600;
   letter-spacing: 0;
@@ -335,7 +336,7 @@ h1 {
 .lead {
   max-width: 720px;
   margin: 0 auto;
-  font-size: var(--subtitle-size);
+  font-size: clamp(18px, 1.28vw, 22px);
   line-height: var(--copy-line-height);
   font-weight: 400;
   color: var(--muted);
@@ -434,7 +435,13 @@ h1 {
   display: block;
   object-fit: cover;
   object-position: center;
+  opacity: 0;
   background: #111;
+  transition: opacity 320ms ease;
+}
+
+.video-card.is-playing video {
+  opacity: 1;
 }
 
 .video-card > img {
@@ -644,6 +651,7 @@ h1 {
 .feature-copy {
   width: min(100%, 678px);
   max-width: 680px;
+  justify-self: start;
 }
 
 .feature-row.reverse .feature-copy {
@@ -1021,19 +1029,19 @@ h1 {
 
 .audience-card {
   position: relative;
-  min-height: 320px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 34px 30px;
   overflow: hidden;
-  border: 0.5px solid rgba(83, 217, 239, 0.34);
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.07);
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
   box-shadow:
-    inset 0 0 0 0.5px rgba(83, 217, 239, 0.035),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.025),
     0 24px 70px rgba(0, 0, 0, 0.28);
 }
 
@@ -1283,6 +1291,44 @@ h1 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 28px;
   margin-top: 64px;
+}
+
+.reviews-controls {
+  display: none;
+}
+
+.reviews-arrow {
+  width: 48px;
+  height: 48px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f6f7f9;
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 220ms ease, border-color 220ms ease, opacity 220ms ease, transform 220ms ease;
+}
+
+.reviews-arrow:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+}
+
+.reviews-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.reviews-counter {
+  min-width: 54px;
+  color: rgba(246, 247, 249, 0.62);
+  font-size: 14px;
+  text-align: center;
 }
 
 .review-card {
@@ -1868,13 +1914,13 @@ h1 {
 
   .hero {
     min-height: auto;
-    padding: 32px 18px 96px;
+    padding: 56px 18px 96px;
   }
 
   .hero-mark {
     width: 66px;
     height: 66px;
-    margin-bottom: 18px;
+    margin-bottom: 34px;
   }
 
   h1 {
@@ -2202,14 +2248,31 @@ h1 {
   }
 
   .reviews-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    display: flex;
+    grid-template-columns: none;
+    gap: 0;
     margin-top: 42px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
   }
 
   .review-card {
-    min-height: auto;
+    flex: 0 0 100%;
+    min-width: 100%;
+    min-height: 260px;
     padding: 24px 22px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .reviews-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
   }
 
   .review-quote-mark {
@@ -2364,9 +2427,6 @@ h1 {
   <body>
     <header class="site-header" aria-label="Главная навигация">
       <a class="brand" href="#hero" aria-label="Executive AI">
-        <span class="brand-mark" aria-hidden="true">
-          <img class="logo-img" src="assets/images/logo.png" alt="" />
-        </span>
         <span>Executive AI</span>
       </a>
 
@@ -2448,7 +2508,13 @@ h1 {
             <span class="app-icon"><img src="assets/images/app-icons/teams.svg" alt="Microsoft Teams" /></span>
             <span class="app-icon"><img src="assets/images/app-icons/google-meet.svg" alt="Google Meet" /></span>
             <span class="app-icon"><img src="assets/images/app-icons/gmail.svg" alt="Gmail" /></span>
+            <span class="app-icon"><img src="assets/images/app-icons/yandex-mail.png" alt="Яндекс Почта" /></span>
             <span class="app-icon"><img src="assets/images/app-icons/mailru.svg" alt="Mail.ru" /></span>
+            <span class="app-icon"><img src="assets/images/app-icons/google-drive.svg" alt="Google Drive" /></span>
+            <span class="app-icon"><img src="assets/images/app-icons/yandex-disk.png" alt="Яндекс Диск" /></span>
+            <span class="app-icon"><img src="assets/images/app-icons/google-calendar.svg" alt="Google Календарь" /></span>
+            <span class="app-icon"><img src="assets/images/app-icons/yandex-calendar.png" alt="Яндекс Календарь" /></span>
+            <span class="app-icon"><img src="assets/images/app-icons/yandex-telemost.png" alt="Яндекс Телемост" /></span>
             <span class="app-icon"><img src="assets/images/app-icons/bitrix24.svg" alt="Bitrix24" /></span>
             <span class="app-icon"><img src="assets/images/app-icons/notion.svg" alt="Notion" /></span>
             <span class="app-icon"><img src="assets/images/app-icons/google-docs.svg" alt="Google Docs" /></span>
@@ -2590,9 +2656,9 @@ h1 {
             </p>
           </article>
           <article class="audience-card">
-            <h3>COO /<br />операционный директор</h3>
+            <h3>Топ-менеджеры</h3>
             <p>
-              Получает инструмент контроля исполнения и операционной памяти.
+              Получают инструмент контроля исполнения и операционной памяти.
             </p>
           </article>
           <article class="audience-card">
@@ -2732,6 +2798,11 @@ h1 {
             </blockquote>
             <div class="review-name">Анна</div>
           </article>
+        </div>
+        <div class="reviews-controls" aria-label="Переключение отзывов">
+          <button class="reviews-arrow reviews-arrow-prev" type="button" aria-label="Предыдущий отзыв">&#8592;</button>
+          <span class="reviews-counter" aria-live="polite">1 / 6</span>
+          <button class="reviews-arrow reviews-arrow-next" type="button" aria-label="Следующий отзыв">&#8594;</button>
         </div>
       </div>
     </section>
@@ -2897,8 +2968,6 @@ h1 {
             '.site-footer .footer-nav a',
             '.site-footer .footer-brand',
             '.site-footer .footer-copy',
-            '.site-footer .footer-docs a',
-            '.site-footer .footer-copyright',
           ].join(','))).filter((element) => (
             !element.closest('.lead-modal')
             && !element.closest('.relief-section')
@@ -2986,6 +3055,61 @@ h1 {
         }
 
         setupInteractiveFrames();
+
+        function setupMobileReviews() {
+          const grid = document.querySelector('.reviews-grid');
+          const cards = grid ? Array.from(grid.querySelectorAll('.review-card')) : [];
+          const previousButton = document.querySelector('.reviews-arrow-prev');
+          const nextButton = document.querySelector('.reviews-arrow-next');
+          const counter = document.querySelector('.reviews-counter');
+          const mobileQuery = window.matchMedia('(max-width: 820px)');
+          if (!grid || !cards.length || !previousButton || !nextButton || !counter) return;
+
+          let activeIndex = 0;
+
+          function revealCard(card) {
+            card.classList.add('is-visible');
+            card.querySelectorAll('.motion-reveal').forEach((element) => element.classList.add('is-visible'));
+          }
+
+          function updateControls() {
+            previousButton.disabled = activeIndex === 0;
+            nextButton.disabled = activeIndex === cards.length - 1;
+            counter.textContent = `${activeIndex + 1} / ${cards.length}`;
+          }
+
+          function showReview(index, smooth = true) {
+            activeIndex = Math.max(0, Math.min(cards.length - 1, index));
+            revealCard(cards[activeIndex]);
+            grid.scrollTo({
+              left: activeIndex * grid.clientWidth,
+              behavior: smooth && !prefersReducedMotion ? 'smooth' : 'auto',
+            });
+            updateControls();
+          }
+
+          previousButton.addEventListener('click', () => showReview(activeIndex - 1));
+          nextButton.addEventListener('click', () => showReview(activeIndex + 1));
+
+          function syncMode() {
+            if (mobileQuery.matches) {
+              showReview(activeIndex, false);
+            } else {
+              activeIndex = 0;
+              grid.scrollTo({ left: 0, behavior: 'auto' });
+              cards.forEach(revealCard);
+              updateControls();
+            }
+          }
+
+          mobileQuery.addEventListener?.('change', syncMode);
+          window.addEventListener('resize', () => {
+            if (mobileQuery.matches) showReview(activeIndex, false);
+          });
+          syncMode();
+        }
+
+        setupMobileReviews();
 
         function preventBrowserZoom(event) {
           if (event.ctrlKey || event.metaKey) event.preventDefault();

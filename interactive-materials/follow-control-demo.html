@@ -214,6 +214,20 @@
       transform: none;
     }
 
+    .history-item {
+      opacity: .72;
+      transform: none;
+    }
+
+    .system-card.history-item {
+      opacity: .72;
+      transform: none;
+    }
+
+    .file-card.history-item {
+      display: flex;
+    }
+
     .file-card.memory-item.is-visible {
       display: flex;
     }
@@ -222,7 +236,7 @@
       max-width: 86%;
       border-radius: 18px;
       padding: 13px 15px;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.45;
       color: #e9edf4;
     }
@@ -251,7 +265,7 @@
       background: rgba(255, 255, 255, .055);
       color: #f4f7fb;
       padding: 11px 13px;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.45;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
     }
@@ -474,7 +488,7 @@
       display: block;
       margin-top: 4px;
       color: #aeb7c5;
-      font-size: 12px;
+      font-size: 13px;
       line-height: 1.35;
     }
 
@@ -538,7 +552,6 @@
       --phone-x: 0px;
       --phone-y: 0px;
       --phone-scale: 1;
-      --phone-y-scale: .86;
       display: grid;
       place-items: center;
       padding: 8px;
@@ -562,7 +575,7 @@
       background: linear-gradient(145deg, #202733, #06080c 72%);
       box-shadow: 0 34px 110px rgba(0, 0, 0, .62), inset 0 1px 0 rgba(255, 255, 255, .1);
       overflow: hidden;
-      transform: translate(var(--phone-x), var(--phone-y)) scaleX(var(--phone-scale)) scaleY(calc(var(--phone-scale) * var(--phone-y-scale)));
+      transform: translate(var(--phone-x), var(--phone-y)) scale(var(--phone-scale));
       transition: transform 2.1s cubic-bezier(.22, 1, .36, 1);
     }
 
@@ -654,7 +667,7 @@
       justify-self: end;
       background: linear-gradient(145deg, #6175ff, #5463df);
       box-shadow: 0 0 0 2px rgba(255, 255, 255, .1), 0 8px 22px rgba(0, 0, 0, .32);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
     }
 
@@ -711,18 +724,18 @@
       flex-direction: column;
       gap: 8px;
       justify-content: flex-end;
-      padding-bottom: 18px;
+      padding-bottom: 10px;
       transition: transform .46s cubic-bezier(.16, 1, .3, 1);
       will-change: transform;
     }
 
     .tg-message {
       display: none;
-      max-width: 84%;
+      max-width: 90%;
       border-radius: 16px;
       padding: 8px 10px;
       color: #fff;
-      font-size: 12px;
+      font-size: 13px;
       line-height: 1.28;
       opacity: 0;
       transform: translateY(12px);
@@ -736,9 +749,25 @@
     }
 
     .tg-message.is-focused {
-      transform: scale(1.045);
+      transform: scale(1.018);
       z-index: 4;
       box-shadow: 0 18px 48px rgba(0, 0, 0, .24);
+    }
+
+    .tg-message.history-message {
+      display: block;
+      opacity: .66;
+      transform: none;
+    }
+
+    .history-divider {
+      align-self: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(28, 28, 36, .72);
+      color: rgba(255, 255, 255, .72);
+      font-size: 10px;
+      font-weight: 700;
     }
 
     .tg-message.ai {
@@ -773,7 +802,7 @@
       margin-bottom: 3px;
       color: #a9d7ff;
       font-weight: 600;
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .tg-file {
@@ -934,7 +963,7 @@
       .bubble,
       .assistant-text,
       .highlight {
-        font-size: 13px;
+        font-size: 14px;
       }
 
       .iphone {
@@ -961,6 +990,20 @@
       <section class="scene memory-scene" data-memory-scene>
         <div class="memory-chat" data-memory-chat>
           <div class="memory-thread" data-memory-stack>
+          <div class="bubble user history-item">Выгрузи итоги сегодняшней встречи с командой</div>
+          <div class="bubble assistant history-item">Готово.</div>
+          <div class="system-card file-card history-item">
+            <div class="file-icon">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 3h7l4 4v14H7zM14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="file-copy">
+              <strong>protocol_product_call.pdf</strong>
+              <span>Протокол звонка • решения, задачи, ответственные</span>
+            </div>
+          </div>
+          <div class="bubble user history-item">Я посмотрел, все нормально, передай всю информацию команде в чате в TG</div>
           <div class="bubble user memory-item" data-memory-item>Продукт должен быть сдан до конца недели</div>
           <div class="bubble assistant memory-item" data-memory-item>Контроль беру на себя.
 
@@ -1037,6 +1080,26 @@
             </div>
             <div class="messages">
               <div class="message-stack" data-message-stack>
+                <div class="tg-message ai history-message">
+                  <span class="tg-name">Executive AI</span>
+                  Команда, протокол звонка готов.
+                  <br><br><b>@sofia</b> — отправить summary клиенту до 17:00.
+                  <br><b>@viktor</b> — подтвердить демо-версию продукта до пятницы.
+                  <br><b>@mikhail</b> — проверить платежи и источники данных до завтра 12:00.
+                </div>
+                <div class="tg-message member history-message">
+                  <span class="tg-name">София</span>
+                  Принято, summary отправлю до 17:00.
+                </div>
+                <div class="tg-message member history-message">
+                  <span class="tg-name">Виктор</span>
+                  Сделано. Прикрепил актуальную демо-версию продукта.
+                  <div class="tg-file">
+                    <div class="tg-file-icon">PDF</div>
+                    <div><strong>demo.pdf</strong><span>1.4 MB</span></div>
+                  </div>
+                </div>
+                <div class="history-divider">позже</div>
                 <div class="tg-message ai" data-tg-message>
                   <span class="tg-name">Executive AI</span>
                   Контроль беру на себя. План на сегодня:
@@ -1049,10 +1112,6 @@
                   <span class="tg-name">София</span>
                   Summary отправлен клиенту. Жду подтверждение.
                 </div>
-                <div class="tg-message ai" data-tg-message>
-                  <span class="tg-name">Executive AI</span>
-                  <b>@viktor</b>, напоминание: через 60 минут дедлайн по демо-версии.
-                </div>
                 <div class="tg-message member" data-tg-message>
                   <span class="tg-name">Виктор</span>
                   Сделано. Прикрепил финальную демо-версию и чеклист.
@@ -1060,11 +1119,6 @@
                     <div class="tg-file-icon">PDF</div>
                     <div><strong>demo-final.pdf</strong><span>1.9 MB</span></div>
                   </div>
-                </div>
-                <div class="tg-message ai" data-tg-message>
-                  <span class="tg-name">Executive AI</span>
-                  <b>@mikhail</b>, платежи и источники данных еще без статуса.
-                  <br><br>Подтверди готовность или назови блокер.
                 </div>
                 <div class="tg-message member" data-tg-message>
                   <span class="tg-name">Михаил</span>
@@ -1100,6 +1154,20 @@
       <section class="scene memory-scene final-report-scene" data-final-scene>
         <div class="memory-chat" data-final-chat>
           <div class="memory-thread" data-final-stack>
+            <div class="bubble user history-item">Продукт должен быть сдан до конца недели</div>
+            <div class="bubble assistant history-item">Контроль беру на себя.
+
+Я разложу решение встречи на задачи, назначу ответственных в рабочем чате, напомню о сроках и буду поднимать блокеры до тех пор, пока продукт не будет сдан клиенту.</div>
+            <div class="system-card file-card history-item">
+              <div class="file-icon">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 3h7l4 4v14H7zM14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="file-copy">
+                <strong>execution_plan.product.pdf</strong>
+              </div>
+            </div>
             <div class="bubble assistant memory-item" data-final-item>Продукт передан клиенту в срок.</div>
             <div class="bubble user memory-item" data-final-item>составь отчет за неделю</div>
             <div class="protocol-stream">
@@ -1228,23 +1296,23 @@
       finalTypedContent.style.transform = "";
       finalTypedText.classList.add("is-visible");
       finalTypedContent.classList.add("is-typing");
-      await wait(430);
+      await wait(300);
 
       for (const character of text) {
         finalInput.value += character;
         finalTypedContent.textContent += character;
         shiftFinalTypedTextToEnd();
-        await wait(48 + Math.random() * 14);
+        await wait(36 + Math.random() * 10);
       }
 
       finalTypedContent.classList.remove("is-typing");
-      await wait(520);
+      await wait(360);
     }
 
     async function submitFinalPrompt(item) {
       finalSend.disabled = false;
       finalSend.classList.add("is-sending");
-      await wait(300);
+      await wait(220);
       finalInput.value = "";
       finalInput.style.color = "";
       finalTypedContent.textContent = "";
@@ -1265,16 +1333,13 @@
     async function typeIntoField(text) {
       tgField.textContent = "";
       tgField.classList.add("is-typing");
-      setPhoneCamera(8, -28, 1.12);
-      await wait(420);
+      setPhoneCamera(0, 0, 1.14);
+      await wait(320);
 
       for (let index = 0; index < text.length; index += 1) {
         const character = text[index];
-        const progress = index / Math.max(text.length - 1, 1);
-        const lineShift = index > 27 ? -6 : 0;
-        setPhoneCamera(8 - progress * 18, -28 + lineShift, 1.12);
         tgField.textContent += character;
-        await wait(40 + Math.random() * 12);
+        await wait(32 + Math.random() * 9);
       }
 
       tgField.classList.remove("is-typing");
@@ -1289,27 +1354,27 @@
       if (options.typing) {
         subtitle.textContent = "Executive AI печатает...";
         subtitle.classList.add("is-typing-status");
-        await wait(640);
+        await wait(480);
       }
 
       const firstZoom = options.firstZoom === true;
 
       if (options.camera !== false && !firstZoom) {
-        setPhoneCamera(0, -84, 1.5);
-        await wait(260);
+        setPhoneCamera(0, 0, 1.36);
+        await wait(220);
       }
 
       message.classList.add("is-visible");
       await wait(40);
-      liftHistory(options.extraLift ?? 10);
+      liftHistory(options.extraLift ?? 64);
 
       if (firstZoom) {
-        setPhoneCamera(0, -84, 1.5);
-        await wait(1780);
+        setPhoneCamera(0, 0, 1.36);
+        await wait(1400);
       }
 
       message.classList.add("is-focused");
-      await wait(780);
+      await wait(620);
       message.classList.remove("is-focused");
 
       if (options.typing) {
@@ -1357,7 +1422,7 @@
 
       for (let index = 0; index < tgMessages.length; index += 1) {
         await revealMessage(tgMessages[index], index, { typing: tgMessages[index].classList.contains("ai"), firstZoom: index === 0 });
-        await wait(310);
+        await wait(240);
       }
 
       await wait(700);
@@ -1373,15 +1438,15 @@
       cursor.classList.remove("is-visible", "to-telegram");
 
       showScene(finalScene);
-      await wait(1150);
-      await revealFinalItem(finalItems[0], 1180);
-      await wait(420);
+      await wait(900);
+      await revealFinalItem(finalItems[0], 980);
+      await wait(320);
       await typeFinalPrompt(finalPrompt);
       await submitFinalPrompt(finalItems[1]);
-      await wait(760);
-      await revealFinalItem(finalItems[2], 1220);
-      await wait(420);
-      await revealFinalItem(finalItems[3], 1220);
+      await wait(560);
+      await revealFinalItem(finalItems[2], 980);
+      await wait(320);
+      await revealFinalItem(finalItems[3], 980);
 
       await wait(2400);
       await resetDemo();
