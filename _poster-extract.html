@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000;
+      }
+
+      video {
+        display: block;
+        width: 1920px;
+        height: 1080px;
+        object-fit: cover;
+      }
+
+      textarea {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="video" src="assets/video/executive-ai-demo.mp4" muted playsinline preload="auto"></video>
+    <textarea id="result"></textarea>
+    <script>
+      (() => {
+      document.body.dataset.script = 'started';
+      var video = document.getElementById('video');
+      var result = document.getElementById('result');
+
+      async function waitFor(target, event) {
+        return new Promise((resolve, reject) => {
+          target.addEventListener(event, resolve, { once: true });
+          target.addEventListener('error', () => reject(new Error(event)), { once: true });
+        });
+      }
+
+      function writeFrame() {
+        var canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        result.value = JSON.stringify({
+          width: canvas.width,
+          height: canvas.height,
+          dataUrl: canvas.toDataURL('image/png')
+        });
+        document.body.dataset.ready = 'true';
+      }
+
+      async function capture() {
+        if (video.readyState === 0) await waitFor(video, 'loadedmetadata');
+        if (video.readyState < 2) await waitFor(video, 'loadeddata');
+        video.currentTime = 0;
+        if (video.readyState < 2) await waitFor(video, 'loadeddata');
+        writeFrame();
+      }
+
+      window.writeFirstFrame = writeFrame;
+
+      var intervalId = window.setInterval(() => {
+        if (document.body.dataset.ready === 'true') {
+          window.clearInterval(intervalId);
+          return;
+        }
+
+        if (video.readyState >= 2 && video.videoWidth && video.videoHeight) {
+          writeFrame();
+          window.clearInterval(intervalId);
+        }
+      }, 100);
+
+      capture().catch((error) => {
+        result.value = JSON.stringify({ error: error.message });
+        document.body.dataset.ready = 'error';
+        window.clearInterval(intervalId);
+      });
+      })();
+    </script>
+  </body>
+</html>
