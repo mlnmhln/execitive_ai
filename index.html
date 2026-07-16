@@ -2386,16 +2386,16 @@ h1 {
   content: "";
   width: 11px;
   height: 7px;
-  border-left: 3px solid #fff;
-  border-bottom: 3px solid #fff;
+  border-left: 3px solid #0b0f12;
+  border-bottom: 3px solid #0b0f12;
   transform: rotate(-45deg) scale(0);
   transform-origin: center;
   transition: transform 140ms cubic-bezier(.2, .8, .2, 1);
 }
 
 .consent-label input:checked {
-  border-color: #42cfe7;
-  background: #42cfe7;
+  border-color: #fff;
+  background: #fff;
 }
 
 .consent-label input:checked::before {
@@ -2410,7 +2410,7 @@ h1 {
 .consent-label a {
   color: #f6f7f9;
   text-decoration: underline;
-  text-decoration-color: rgba(66, 207, 231, 0.8);
+  text-decoration-color: rgba(246, 247, 249, 0.88);
   text-underline-offset: 4px;
 }
 
@@ -4771,6 +4771,7 @@ h1 {
         const modal = document.querySelector('#lead-modal');
         const form = document.querySelector('#lead-form');
         const phoneInput = form ? form.querySelector('input[name="phone"]') : null;
+        const telegramInput = form ? form.querySelector('input[name="telegram"]') : null;
         const status = form ? form.querySelector('.lead-status') : null;
         const closeButton = modal ? modal.querySelector('.lead-close') : null;
         const modalTriggers = document.querySelectorAll('.header-cta, .primary-btn, .text-btn, .secondary-link, .plan-button, .final-primary, .final-link');
@@ -4802,6 +4803,13 @@ h1 {
           return formatted;
         }
 
+        function formatTelegram(value) {
+          const trimmed = value.trim();
+          if (!trimmed) return '';
+          const username = trimmed.replace(/^@+/, '');
+          return username ? `@${username}` : '@';
+        }
+
         modalTriggers.forEach((trigger) => {
           trigger.addEventListener('click', (event) => {
             event.preventDefault();
@@ -4825,6 +4833,15 @@ h1 {
         });
         phoneInput?.addEventListener('blur', () => {
           if (phoneInput.value.replace(/\D/g, '') === '7') phoneInput.value = '';
+        });
+
+        telegramInput?.addEventListener('input', () => {
+          const formatted = formatTelegram(telegramInput.value);
+          telegramInput.value = formatted;
+          telegramInput.setSelectionRange(formatted.length, formatted.length);
+        });
+        telegramInput?.addEventListener('blur', () => {
+          if (telegramInput.value === '@') telegramInput.value = '';
         });
 
         form?.addEventListener('submit', async (event) => {
