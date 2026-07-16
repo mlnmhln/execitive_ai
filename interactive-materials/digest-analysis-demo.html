@@ -125,11 +125,12 @@
 
     .digest-title {
       min-width: 0;
-      font-size: clamp(34px, 5.1vw, 56px);
+      font-size: clamp(30px, 4.35vw, 50px);
       line-height: 1;
       font-weight: 700;
       letter-spacing: 0;
-      overflow-wrap: anywhere;
+      white-space: nowrap;
+      overflow-wrap: normal;
       text-align: center;
     }
 
@@ -197,6 +198,7 @@
       display: grid;
       gap: 15px;
       align-content: end;
+      margin-top: auto;
       transition: transform .62s cubic-bezier(.16, 1, .3, 1);
       will-change: transform;
     }
@@ -227,6 +229,7 @@
       display: flex;
     }
 
+    .thinking-card.memory-item.is-visible,
     .parsing-card.memory-item.is-visible {
       display: inline-flex;
     }
@@ -273,6 +276,10 @@
       display: grid;
       gap: 10px;
       justify-items: start;
+      min-height: 0;
+    }
+
+    .protocol-stream:has(.is-visible) {
       min-height: 58px;
     }
 
@@ -315,13 +322,68 @@
       flex: 0 0 auto;
     }
 
-    .parsing-card {
+    .thinking-card {
       width: auto;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
+      justify-content: center;
+      min-width: 68px;
+      gap: 5px;
+      padding: 12px 15px;
       border-radius: 20px;
+    }
+
+    .thinking-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(244, 247, 251, .72);
+      animation: thinkingPulse 1.05s ease-in-out infinite;
+    }
+
+    .thinking-dot:nth-child(2) {
+      animation-delay: .16s;
+    }
+
+    .thinking-dot:nth-child(3) {
+      animation-delay: .32s;
+    }
+
+    .parsing-card {
+      width: auto;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px 13px;
+      border-radius: 20px;
+    }
+
+    .thinking-card.memory-item:not(.is-visible),
+    .parsing-card.memory-item:not(.is-visible) {
+      display: none;
+    }
+
+    .system-card.memory-item.is-done,
+    .parsing-card.is-done,
+    .thinking-card.is-done {
+      opacity: 0;
+      transform: translateY(-6px) scale(.98);
+      pointer-events: none;
+    }
+
+    .source-caption {
+      color: rgba(244, 247, 251, .86);
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .source-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .source-icon {
@@ -333,10 +395,53 @@
       color: #fff;
       position: relative;
       overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px) scale(.86);
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, .7),
         inset 0 -1px 0 rgba(0, 0, 0, .08),
         0 10px 22px rgba(0, 0, 0, .28);
+      transition: opacity .36s ease, transform .46s cubic-bezier(.16, 1, .3, 1), filter .36s ease;
+    }
+
+    .parsing-card.is-loading .source-icon {
+      opacity: 1;
+      transform: none;
+      animation: sourceExtract 1.25s ease-in-out infinite;
+    }
+
+    .parsing-card.is-loading .source-icon:nth-child(1) {
+      transition-delay: .08s;
+      animation-delay: .08s;
+    }
+
+    .parsing-card.is-loading .source-icon:nth-child(2) {
+      transition-delay: .28s;
+      animation-delay: .22s;
+    }
+
+    .parsing-card.is-loading .source-icon:nth-child(3) {
+      transition-delay: .48s;
+      animation-delay: .36s;
+    }
+
+    .parsing-card.is-loading .source-icon:nth-child(4) {
+      transition-delay: .68s;
+      animation-delay: .5s;
+    }
+
+    .source-icon::after {
+      content: "";
+      position: absolute;
+      inset: -45%;
+      background: linear-gradient(115deg, transparent 34%, rgba(255, 255, 255, .55) 50%, transparent 66%);
+      transform: translateX(-110%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .parsing-card.is-loading .source-icon::after {
+      animation: sourceSweep 1.25s ease-in-out infinite;
     }
 
     .source-icon svg {
@@ -396,6 +501,38 @@
       transform: translate(-50%, -50%);
     }
 
+    @keyframes thinkingPulse {
+      0%, 80%, 100% {
+        opacity: .38;
+        transform: translateY(0);
+      }
+
+      40% {
+        opacity: 1;
+        transform: translateY(-4px);
+      }
+    }
+
+    @keyframes sourceExtract {
+      0%, 100% {
+        filter: drop-shadow(0 0 0 rgba(93, 210, 255, 0));
+      }
+
+      45% {
+        filter: drop-shadow(0 0 12px rgba(93, 210, 255, .48));
+      }
+    }
+
+    @keyframes sourceSweep {
+      0% {
+        transform: translateX(-110%);
+      }
+
+      58%, 100% {
+        transform: translateX(110%);
+      }
+    }
+
     .memory-composer {
       width: min(100%, 650px);
       min-height: 120px;
@@ -426,22 +563,21 @@
       position: absolute;
       left: 18px;
       top: 18px;
-      max-width: calc(100% - 36px);
+      display: block;
+      width: calc(100% - 36px);
       min-height: 36px;
       color: var(--text);
       font-size: 19px;
       font-weight: 400;
-      white-space: nowrap;
-      overflow: hidden;
+      line-height: 1.25;
+      white-space: normal;
+      overflow-wrap: anywhere;
       pointer-events: none;
       opacity: 0;
     }
 
     .typed-text-content {
-      display: inline-block;
-      min-width: max-content;
-      transition: transform .16s linear;
-      will-change: transform;
+      display: inline;
     }
 
     .typed-text.is-visible {
@@ -628,7 +764,7 @@
       box-shadow: 0 34px 110px rgba(0, 0, 0, .62), inset 0 1px 0 rgba(255, 255, 255, .1);
       overflow: hidden;
       transform: translate(var(--phone-x), var(--phone-y)) scale(var(--phone-scale));
-      transition: transform 1.75s cubic-bezier(.22, 1, .36, 1);
+      transition: transform .9s cubic-bezier(.22, 1, .36, 1);
     }
 
     .tg-screen {
@@ -691,9 +827,11 @@
       width: 44px;
       border-radius: 999px;
       justify-self: start;
-      grid-template-columns: auto 1fr;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       gap: 3px;
-      padding: 0 6px;
+      padding: 0 5px 0 4px;
       background: rgba(31, 31, 39, .82);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
       font-size: 18px;
@@ -705,17 +843,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 24px;
-      min-height: 19px;
+      min-width: 22px;
+      min-height: 22px;
       border-radius: 999px;
       background: #fff;
       color: #20232a;
       font-size: 9px;
       line-height: 1;
+      transform: translateY(.2px);
     }
 
     .avatar {
       width: 32px;
+      height: 32px;
       justify-self: end;
       background: linear-gradient(145deg, #6175ff, #5463df);
       box-shadow: 0 0 0 2px rgba(255, 255, 255, .1), 0 8px 22px rgba(0, 0, 0, .32);
@@ -781,11 +921,19 @@
       will-change: transform;
     }
 
+    .phone-scene.is-message-focus .iphone {
+      transform-origin: center bottom;
+    }
+
+    .phone-scene.is-message-focus .tg-message.is-visible:not(.is-focused) {
+      opacity: .42;
+      filter: blur(.2px);
+      transition: opacity .28s ease, filter .28s ease, transform .4s cubic-bezier(.16, 1, .3, 1);
+    }
+
     .tg-message {
       display: none;
-      max-width: 92%;
-      border-radius: 14px;
-      padding: 8px 10px;
+      width: 100%;
       color: #fff;
       font-size: 13.5px;
       line-height: 1.32;
@@ -795,7 +943,9 @@
     }
 
     .tg-message.is-visible {
-      display: block;
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
       opacity: 1;
       transform: none;
     }
@@ -803,23 +953,83 @@
     .tg-message.is-focused {
       transform: scale(1.018);
       z-index: 4;
-      box-shadow: 0 18px 48px rgba(0, 0, 0, .24);
     }
 
-    .tg-message.ai {
-      align-self: flex-start;
+    .tg-avatar {
+      width: 29px;
+      height: 29px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: #fff;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0;
+      background: linear-gradient(145deg, #7252d8, #342747);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18), 0 8px 20px rgba(0, 0, 0, .22);
+    }
+
+    .tg-bubble {
+      max-width: calc(92% - 36px);
+      border-radius: 14px;
+      padding: 8px 10px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
+    }
+
+    .tg-message.ai,
+    .tg-message.member {
+      justify-content: flex-start;
+    }
+
+    .tg-message.ai .tg-bubble {
       background: linear-gradient(145deg, rgba(52, 36, 58, .98), rgba(34, 35, 48, .98));
       border-bottom-left-radius: 5px;
     }
 
-    .tg-message.member {
-      align-self: flex-start;
+    .tg-message.member .tg-bubble {
       background: linear-gradient(145deg, rgba(58, 37, 63, .98), rgba(38, 34, 48, .98));
       border-bottom-left-radius: 5px;
     }
 
+    .ai-avatar,
+    .user-avatar,
+    .maria-avatar,
+    .mikhail-avatar,
+    .viktor-avatar {
+      overflow: hidden;
+      padding: 0;
+      border-radius: 50%;
+      background: #03111c;
+    }
+
+    .ai-avatar img,
+    .user-avatar img,
+    .maria-avatar img,
+    .mikhail-avatar img,
+    .viktor-avatar img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .tg-message.member .tg-avatar {
+      background: linear-gradient(145deg, #375d78, #213140);
+    }
+
     .tg-message.leader {
-      align-self: flex-end;
+      justify-content: flex-end;
+    }
+
+    .tg-message.leader .tg-avatar {
+      order: 2;
+      background: linear-gradient(145deg, #5cb3ff, #236fc0);
+    }
+
+    .tg-message.leader .tg-bubble {
+      order: 1;
       background: linear-gradient(145deg, #2f95ec, #2278ce);
       border-bottom-right-radius: 5px;
     }
@@ -830,6 +1040,10 @@
       margin-bottom: 4px;
       transform: scale(1.02);
       transform-origin: left bottom;
+    }
+
+    .tg-message.is-focused .tg-bubble,
+    .phone-scene.is-final-focus .tg-message.ai.final-control .tg-bubble {
       box-shadow: 0 30px 80px rgba(0, 0, 0, .42);
     }
 
@@ -856,19 +1070,28 @@
     }
 
     .tg-file-icon {
-      width: 26px;
-      height: 26px;
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
       display: grid;
       place-items: center;
       background: rgba(255, 255, 255, .14);
       flex: 0 0 auto;
+      overflow: hidden;
+    }
+
+    .tg-file-icon img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
     }
 
     .tg-file strong {
       display: block;
-      font-size: 12px;
-      line-height: 1.1;
+      font-size: 10.8px;
+      line-height: 1.08;
+      letter-spacing: 0;
     }
 
     .tg-file span {
@@ -881,11 +1104,11 @@
     .tg-input {
       position: relative;
       z-index: 2;
-      min-height: 70px;
+      min-height: 84px;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       gap: 8px;
-      padding: 8px 12px 17px;
+      padding: 8px 12px 28px;
       background: linear-gradient(180deg, rgba(7, 7, 11, .08), rgba(7, 7, 11, .78));
       backdrop-filter: blur(16px);
     }
@@ -900,7 +1123,7 @@
       background: rgba(31, 31, 39, .88);
       color: #fff;
       flex: 0 0 auto;
-      margin-bottom: 2px;
+      margin-bottom: 0;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
     }
 
@@ -911,11 +1134,12 @@
       flex: 1;
       border-radius: 21px;
       background: rgba(31, 31, 39, .88);
-      display: block;
-      padding: 8px 13px;
+      display: flex;
+      align-items: center;
+      padding: 0 13px;
       color: rgba(255, 255, 255, .58);
       font-size: 15px;
-      line-height: 1.22;
+      line-height: 1.2;
       min-width: 0;
       overflow: hidden;
       white-space: normal;
@@ -1040,33 +1264,41 @@
           </div>
           <div class="bubble user memory-item" data-memory-item>Выгрузи итоги сегодняшней встречи с командой</div>
           <div class="protocol-stream">
-            <div class="system-card parsing-card memory-item" data-step data-memory-item>
-              <span class="source-icon source-doc" title="Документ" aria-label="Документ">
+            <div class="system-card thinking-card memory-item" data-thinking-card data-memory-item>
+              <span class="thinking-dot"></span>
+              <span class="thinking-dot"></span>
+              <span class="thinking-dot"></span>
+            </div>
+            <div class="system-card parsing-card memory-item" data-step data-memory-item data-parsing-card>
+              <div class="source-caption">Выгружаю контекст из подключенных источников</div>
+              <div class="source-icons">
+                <span class="source-icon source-doc" title="Документ" aria-label="Документ">
                 <svg viewBox="0 0 48 48" aria-hidden="true">
                   <path d="M16 8h14l7 7v25H16a5 5 0 0 1-5-5V13a5 5 0 0 1 5-5Z" fill="#2f74ea"/>
                   <path d="M30 8v9h9Z" fill="#9cc0ff"/>
                   <path d="M17 23h15M17 28h15M17 33h10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
                 </svg>
               </span>
-              <span class="source-icon source-audio" title="Запись встречи" aria-label="Запись встречи">
+                <span class="source-icon source-audio" title="Запись встречи" aria-label="Запись встречи">
                 <svg viewBox="0 0 48 48" aria-hidden="true">
                   <path d="M24 9a7 7 0 0 1 7 7v10a7 7 0 0 1-14 0V16a7 7 0 0 1 7-7Z" fill="#fff"/>
                   <path d="M13 24v2a11 11 0 0 0 22 0v-2M24 37v5M18 42h12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
                 </svg>
               </span>
-              <span class="source-icon source-chat" title="Telegram" aria-label="Telegram">
+                <span class="source-icon source-chat" title="Telegram" aria-label="Telegram">
                 <svg viewBox="0 0 48 48" aria-hidden="true">
                   <path d="M36.6 14.1 12.9 23.3c-1.6.6-1.5 1.5-.3 1.9l6.1 1.9 2.3 7.2c.3.9.8 1.1 1.6.5l3.5-2.8 5.9 4.3c1.1.6 1.9.3 2.2-1.1l3.9-19.5c.4-1.7-.6-2.5-1.5-1.6Z" fill="#fff"/>
                   <path d="m19.1 27 13.5-8.5c.7-.4 1.3-.2.8.3L22.4 28.7l-.5 4.3-2.8-6Z" fill="#d7f2ff"/>
                 </svg>
               </span>
-              <span class="source-icon source-task" title="Задачи" aria-label="Задачи">
+                <span class="source-icon source-task" title="Задачи" aria-label="Задачи">
                 <svg viewBox="0 0 48 48" aria-hidden="true">
                   <path d="m14 20 5 5 8-9" fill="none" stroke="#29d6c8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M29 20h8M29 29h8" fill="none" stroke="#45a9ff" stroke-width="4" stroke-linecap="round"/>
                   <path d="m14 30 5 5 8-9" fill="none" stroke="#f2b84b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-              </span>
+                </span>
+              </div>
             </div>
             <div class="bubble assistant memory-item" data-memory-item>Готово.</div>
             <div class="system-card file-card memory-item" data-step data-memory-item>
@@ -1081,7 +1313,7 @@
               </div>
             </div>
           </div>
-          <div class="bubble user memory-item" data-memory-item>Я посмотрел, все нормально, передай всю информацию команде в чате в TG</div>
+          <div class="bubble user memory-item" data-memory-item>Передай всю информацию команде в чате в TG</div>
           </div>
         </div>
         <form class="memory-composer" data-memory-form>
@@ -1129,47 +1361,66 @@
                 <strong>Executive AI • Product</strong>
                 <span data-subtitle>4 участника</span>
               </div>
-              <div class="avatar">AI</div>
+              <div class="avatar ai-avatar"><img src="../assets/images/digest-analysis-demo/executive-ai-avatar.jpeg" alt="Executive AI"></div>
             </div>
             <div class="messages">
               <div class="message-stack" data-message-stack>
               <div class="tg-message ai" data-tg-message>
-                <span class="tg-name">Executive AI</span>
-                Команда, протокол звонка готов.
-                <br><br><b>@sofia</b> — отправить summary клиенту до 17:00.
-                <br><b>@viktor</b> — подтвердить демо-версию продукта до пятницы.
-                <br><b>@mikhail</b> — проверить платежи и источники данных до завтра 12:00.
-              </div>
-              <div class="tg-message member" data-tg-message>
-                <span class="tg-name">София</span>
-                Принято, summary отправлю до 17:00.
-              </div>
-              <div class="tg-message member" data-tg-message>
-                <span class="tg-name">Виктор</span>
-                Сделано. Прикрепил актуальную демо-версию продукта.
-                <div class="tg-file">
-                  <div class="tg-file-icon">PDF</div>
-                  <div><strong>demo.pdf</strong><span>1.4 MB</span></div>
+                <span class="tg-avatar ai-avatar"><img src="../assets/images/digest-analysis-demo/executive-ai-avatar.jpeg" alt="Executive AI"></span>
+                <div class="tg-bubble">
+                  <span class="tg-name">Executive AI</span>
+                  Команда, протокол звонка готов.
+                  <br><br><b>@sofia</b> — отправить summary клиенту до 17:00.
+                  <br><b>@viktor</b> — подтвердить демо-версию продукта до пятницы.
+                  <br><b>@mikhail</b> — проверить платежи и источники данных до завтра 12:00.
                 </div>
               </div>
               <div class="tg-message member" data-tg-message>
-                <span class="tg-name">Михаил</span>
-                Нужна выгрузка по платежам за последнюю неделю.
+                <span class="tg-avatar maria-avatar"><img src="../assets/images/digest-analysis-demo/sofia-avatar.jpg" alt="София"></span>
+                <div class="tg-bubble">
+                  <span class="tg-name">София</span>
+                  Принято, summary отправлю до 17:00.
+                </div>
+              </div>
+              <div class="tg-message member" data-tg-message>
+                <span class="tg-avatar viktor-avatar"><img src="../assets/images/digest-analysis-demo/viktor-avatar.jpg" alt="Виктор"></span>
+                <div class="tg-bubble">
+                  <span class="tg-name">Виктор</span>
+                  Сделано. Прикрепил актуальную демо-версию продукта.
+                  <div class="tg-file">
+                    <div class="tg-file-icon"><img src="../assets/images/digest-analysis-demo/pdf-icon.png" alt="PDF"></div>
+                    <div><strong>demo.pdf</strong><span>1.4 MB</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="tg-message member" data-tg-message>
+                <span class="tg-avatar mikhail-avatar"><img src="../assets/images/digest-analysis-demo/mikhail-avatar.jpg" alt="Михаил"></span>
+                <div class="tg-bubble">
+                  <span class="tg-name">Михаил</span>
+                  Нужна выгрузка по платежам за последнюю неделю.
+                </div>
               </div>
               <div class="tg-message ai" data-tg-message>
-                <span class="tg-name">Executive AI</span>
-                Выгрузил. Файл ниже.
-                <div class="tg-file">
-                  <div class="tg-file-icon">XLS</div>
-                  <div><strong>payments_export.xlsx</strong><span>742 KB</span></div>
+                <span class="tg-avatar ai-avatar"><img src="../assets/images/digest-analysis-demo/executive-ai-avatar.jpeg" alt="Executive AI"></span>
+                <div class="tg-bubble">
+                  <span class="tg-name">Executive AI</span>
+                  Выгрузил. Файл ниже.
+                  <div class="tg-file">
+                    <div class="tg-file-icon"><img src="../assets/images/digest-analysis-demo/xlsx-icon.png" alt="XLSX"></div>
+                    <div><strong>payments_export.xlsx</strong><span>742 KB</span></div>
+                  </div>
                 </div>
               </div>
               <div class="tg-message leader" data-final-user>
-                Продукт должен быть сдан до конца недели
+                <span class="tg-avatar user-avatar"><img src="../assets/images/digest-analysis-demo/executive-ai-avatar.jpeg" alt="Вы"></span>
+                <div class="tg-bubble">Продукт должен быть сдан до конца недели</div>
               </div>
               <div class="tg-message ai final-control" data-final-ai>
-                <span class="tg-name">Executive AI</span>
-                Контроль беру на себя!
+                <span class="tg-avatar ai-avatar"><img src="../assets/images/digest-analysis-demo/executive-ai-avatar.jpeg" alt="Executive AI"></span>
+                <div class="tg-bubble">
+                  <span class="tg-name">Executive AI</span>
+                  Контроль беру на себя!
+                </div>
               </div>
               </div>
             </div>
@@ -1203,6 +1454,8 @@
     const memoryTypedText = document.querySelector("[data-memory-typed-text]");
     const memoryTypedContent = document.querySelector("[data-memory-typed-content]");
     const memorySend = document.querySelector("[data-memory-send]");
+    const thinkingCard = document.querySelector("[data-thinking-card]");
+    const parsingCard = document.querySelector("[data-parsing-card]");
     const telegramLaunch = document.querySelector("[data-telegram-launch]");
     const telegramButton = document.querySelector(".telegram-icon");
     const phoneScene = document.querySelector("[data-phone-scene]");
@@ -1216,7 +1469,7 @@
     const finalAi = document.querySelector("[data-final-ai]");
     const cursor = document.querySelector("[data-cursor]");
     const firstMemoryPrompt = "Выгрузи итоги сегодняшней встречи с командой";
-    const secondMemoryPrompt = "Я посмотрел, все нормально, передай всю информацию команде в чате в TG";
+    const secondMemoryPrompt = "Передай всю информацию команде в чате в TG";
     let scenarioStarted = false;
 
     function wait(ms) {
@@ -1233,10 +1486,12 @@
       memoryStack.style.transform = `translateY(-${lift}px)`;
     }
 
-    async function revealMemoryItem(item) {
+    async function revealMemoryItem(item, options = {}) {
       item.classList.add("is-visible");
       await wait(50);
-      liftMemoryHistory();
+      if (options.lift !== false) {
+        liftMemoryHistory();
+      }
       await wait(520);
     }
 
@@ -1252,7 +1507,6 @@
       for (const character of text) {
         memoryInput.value += character;
         memoryTypedContent.textContent += character;
-        shiftTypedTextToEnd();
         await wait(34 + Math.random() * 9);
       }
 
@@ -1260,12 +1514,7 @@
       await wait(260);
     }
 
-    function shiftTypedTextToEnd() {
-      const overflow = Math.max(0, memoryTypedContent.scrollWidth - memoryTypedText.clientWidth);
-      memoryTypedContent.style.transform = `translateX(-${overflow}px)`;
-    }
-
-    async function submitMemoryPrompt(item) {
+    async function submitMemoryPrompt(item, options = {}) {
       memorySend.disabled = false;
       memorySend.classList.add("is-sending");
       await wait(180);
@@ -1277,7 +1526,22 @@
       memoryTypedContent.classList.remove("is-typing");
       memorySend.disabled = true;
       memorySend.classList.remove("is-sending");
-      await revealMemoryItem(item);
+      await revealMemoryItem(item, options);
+    }
+
+    async function playContextExport() {
+      await revealMemoryItem(thinkingCard);
+      await wait(760);
+      thinkingCard.classList.add("is-done");
+      await wait(180);
+      await revealMemoryItem(parsingCard);
+      parsingCard.classList.add("is-loading");
+      await wait(1900);
+      parsingCard.classList.add("is-done");
+      await wait(360);
+      thinkingCard.classList.remove("is-visible");
+      parsingCard.classList.remove("is-visible", "is-loading");
+      await wait(120);
     }
 
     function setPhoneCamera(x = 0, y = 0, scale = 1) {
@@ -1289,8 +1553,8 @@
     async function typeIntoField(text) {
       tgField.textContent = "";
       tgField.classList.add("is-typing");
-      setPhoneCamera(0, 0, 1.14);
-      await wait(320);
+      setPhoneCamera(0, -16, 1.02);
+      await wait(420);
 
       for (let index = 0; index < text.length; index += 1) {
         const character = text[index];
@@ -1306,6 +1570,20 @@
       messageStack.style.transform = `translateY(-${lift}px)`;
     }
 
+    function messageCamera(index) {
+      const shots = [
+        { x: 0, y: -118, scale: 1.72, lift: 0 },
+        { x: 0, y: -124, scale: 1.74, lift: 0 },
+        { x: 0, y: -130, scale: 1.74, lift: 10 },
+        { x: 0, y: -136, scale: 1.74, lift: 18 },
+        { x: 0, y: -142, scale: 1.74, lift: 26 },
+        { x: 0, y: -118, scale: 1.7, lift: 0 },
+        { x: 0, y: -124, scale: 1.72, lift: 12 },
+      ];
+
+      return shots[index] ?? { x: 0, y: -126, scale: 1.7, lift: 16 };
+    }
+
     async function revealMessage(message, index, options = {}) {
       if (options.typing) {
         subtitle.textContent = "Executive AI печатает...";
@@ -1313,24 +1591,24 @@
         await wait(480);
       }
 
-      const firstZoom = options.firstZoom === true;
+      const cameraShot = messageCamera(index);
 
-      if (options.camera !== false && !firstZoom) {
-        setPhoneCamera(0, 0, 1.36);
-        await wait(220);
+      if (options.camera !== false) {
+        setPhoneCamera(cameraShot.x, cameraShot.y, cameraShot.scale);
+        await wait(options.firstZoom ? 760 : 260);
       }
 
       message.classList.add("is-visible");
       await wait(40);
-      liftHistory(options.extraLift ?? 64);
+      liftHistory(options.extraLift ?? cameraShot.lift);
 
-      if (firstZoom) {
-        setPhoneCamera(0, 0, 1.36);
-        await wait(1200);
+      if (options.camera !== false) {
+        setPhoneCamera(cameraShot.x, cameraShot.y - 4, cameraShot.scale + .03);
+        await wait(options.firstZoom ? 620 : 240);
       }
 
       message.classList.add("is-focused");
-      await wait(620);
+      await wait(860);
       message.classList.remove("is-focused");
 
       if (options.typing) {
@@ -1362,12 +1640,14 @@
       [memoryScene, telegramLaunch, phoneScene].forEach((item) => item.classList.remove("is-visible"));
       memoryItems.forEach((item) => item.classList.remove("is-visible"));
       memoryStack.style.transform = "";
-      steps.forEach((step) => step.classList.remove("is-visible"));
+      steps.forEach((step) => step.classList.remove("is-visible", "is-loading", "is-done"));
+      thinkingCard.classList.remove("is-visible", "is-done");
+      parsingCard.classList.remove("is-visible", "is-loading", "is-done");
       tgMessages.forEach((message) => message.classList.remove("is-visible"));
       finalUser.classList.remove("is-visible");
       finalAi.classList.remove("is-visible");
       messageStack.style.transform = "";
-      phoneScene.classList.remove("is-final-focus");
+      phoneScene.classList.remove("is-final-focus", "is-message-focus");
       setPhoneCamera(0, 0, 1);
       subtitle.textContent = "4 участника";
       subtitle.classList.remove("is-typing-status");
@@ -1391,18 +1671,16 @@
       await wait(700);
 
       await typeMemoryPrompt(firstMemoryPrompt);
-      await submitMemoryPrompt(memoryItems[0]);
-      await wait(160);
-      await revealMemoryItem(memoryItems[1]);
-      await wait(140);
-      await revealMemoryItem(memoryItems[2]);
-      await wait(140);
+      await submitMemoryPrompt(memoryItems[0], { lift: false });
+      await playContextExport();
       await revealMemoryItem(memoryItems[3]);
-      await wait(420);
+      await wait(480);
+      await revealMemoryItem(memoryItems[4]);
+      await wait(760);
       await typeMemoryPrompt(secondMemoryPrompt);
-      await submitMemoryPrompt(memoryItems[4]);
+      await submitMemoryPrompt(memoryItems[5]);
 
-      await wait(650);
+      await wait(1400);
       showScene(telegramLaunch);
       await wait(700);
 
@@ -1419,6 +1697,7 @@
       subtitle.textContent = "4 участника";
       subtitle.classList.remove("is-typing-status");
       cursor.classList.remove("is-visible", "to-telegram", "is-clicking");
+      phoneScene.classList.add("is-message-focus");
       await wait(1050);
 
       for (let index = 0; index < tgMessages.length; index += 1) {
@@ -1426,17 +1705,20 @@
         await wait(messagePause(tgMessages[index], tgMessages[index + 1]));
       }
 
-      await wait(700);
+      await wait(900);
+      phoneScene.classList.remove("is-message-focus");
       setPhoneCamera(0, 0, 1);
-      await wait(850);
+      await wait(1400);
       await typeIntoField("Продукт должен быть сдан до конца недели");
       await wait(420);
       tgField.textContent = "Сообщение";
-      await revealMessage(finalUser, tgMessages.length, { camera: false, extraLift: 28 });
+      setPhoneCamera(0, 0, 1);
+      await wait(320);
+      await revealMessage(finalUser, tgMessages.length, { camera: false, extraLift: 18 });
       await wait(520);
-      await revealMessage(finalAi, tgMessages.length + 1, { typing: true, camera: false, extraLift: 38 });
+      await revealMessage(finalAi, tgMessages.length + 1, { typing: true, camera: false, extraLift: 34 });
       await wait(620);
-      setPhoneCamera(-4, -18, 1.06);
+      setPhoneCamera(0, 0, 1);
       phoneScene.classList.add("is-final-focus");
       await wait(1700);
       await resetDemo();

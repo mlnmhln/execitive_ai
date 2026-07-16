@@ -361,6 +361,109 @@
       }
     }
 
+    .context-loader {
+      display: grid;
+      gap: 13px;
+      min-width: min(100%, 440px);
+      padding: 2px 0;
+      color: #dbe5ef;
+    }
+
+    .context-loader-title {
+      color: #aeb8c6;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .loader-icons {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 58px;
+    }
+
+    .loader-icon {
+      --glow: rgba(85, 237, 240, .28);
+      position: relative;
+      width: 50px;
+      height: 50px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(8px) scale(.92);
+      box-shadow: 0 14px 34px var(--glow), inset 0 1px 0 rgba(255, 255, 255, .28);
+      transition: opacity .42s ease, transform .52s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .loader-icon.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .loader-icon.is-visible::after {
+      content: "";
+      position: absolute;
+      left: calc(100% + 4px);
+      top: 50%;
+      width: 19px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(85, 237, 240, .72), rgba(85, 237, 240, 0));
+      transform: translateY(-50%);
+      animation: stream-pulse 1s ease-in-out infinite;
+    }
+
+    .loader-icon:last-child::after {
+      display: none;
+    }
+
+    .loader-icon img {
+      width: 27px;
+      height: 27px;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .22));
+    }
+
+    .loader-icon.telegram {
+      --glow: rgba(42, 171, 238, .34);
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .loader-icon.drive {
+      --glow: rgba(52, 168, 83, .3);
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .loader-icon.mail {
+      --glow: rgba(255, 61, 61, .32);
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .loader-icon.notes {
+      --glow: rgba(66, 133, 244, .28);
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .context-loader.is-done {
+      opacity: 0;
+      transform: translateY(-6px) scale(.985);
+      transition: opacity .34s ease, transform .34s ease;
+    }
+
+    @keyframes stream-pulse {
+      0%, 100% {
+        opacity: .18;
+        transform: translateY(-50%) scaleX(.65);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-50%) scaleX(1);
+      }
+    }
+
     .assistant-text {
       display: block;
       white-space: pre-line;
@@ -869,19 +972,17 @@
     const projectMenu = document.querySelector("[data-project-menu]");
     const projectOptions = [...document.querySelectorAll("[data-project-option]")];
     const selectedProject = "Разработка нового продукта";
-    const scenarioQuery = "Когда встреча с командой продукта?";
+    const scenarioQuery = "Какой статус по разработке для Альфы?";
     let scenarioStarted = false;
 
-    const meetingBrief = `Встреча сегодня в 15:00.
+    const meetingBrief = `Сегодня в 15:00 будет встреча с командой.
 На встрече будет: продакт-менеджер, разработчик и аналитик.
+Дедлайн по задачам был вчера.
 
-На встрече нужно обсудить:
+Команда покажет:
 
-• статус запуска
-• готовность демо-версии продукта
-• интеграцию с CRM
-
-Главное: проверить onboarding-сценарий продукта (дедлайн был - пятница).`;
+• демо-версию продукта
+• интеграцию с CRM`;
     const meetingHighlight = "Во время встречи зафиксирую решения, создам новые задачи и назначу ответственных.";
 
     function openDemo() {
@@ -970,7 +1071,7 @@
     }
 
     async function typeScenario(text) {
-      app.style.setProperty("--follow-x", "300px");
+      app.style.setProperty("--follow-x", "390px");
       app.style.setProperty("--shell-transition", ".9s");
       app.classList.add("is-focusing");
       input.value = "";
@@ -989,7 +1090,7 @@
       for (let index = 0; index < text.length; index += 1) {
         const character = text[index];
         const progress = index / Math.max(text.length - 1, 1);
-        const followX = 300 - progress * 540;
+        const followX = 390 - progress * 540;
 
         app.style.setProperty("--follow-x", `${followX}px`);
         input.value += character;
@@ -997,7 +1098,7 @@
         await wait(105 + Math.random() * 65);
       }
 
-      app.style.setProperty("--follow-x", "-240px");
+      app.style.setProperty("--follow-x", "-150px");
       app.style.setProperty("--shell-transition", ".9s");
       typedText.classList.remove("is-typing");
     }
@@ -1011,32 +1112,45 @@
       }
     }
 
-    function createContextSources() {
-      const row = document.createElement("span");
-      row.className = "source-row";
-      row.innerHTML = `
-        <span>Контекст собран из</span>
-        <span class="source-icons" aria-label="Календарь, заметки, почта">
-          <span class="source-icon" title="Календарь" aria-label="Календарь">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 3v3M17 3v3M4.5 9h15M6.5 5h11A2.5 2.5 0 0 1 20 7.5v10A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-10A2.5 2.5 0 0 1 6.5 5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+    function createContextLoader() {
+      const loader = document.createElement("div");
+      loader.className = "context-loader";
+      loader.innerHTML = `
+        <span class="context-loader-title">Собираю контекст из подключенных источников</span>
+        <span class="loader-icons" aria-label="Telegram, Google Drive, Яндекс Почта, Заметки">
+          <span class="loader-icon telegram" title="Telegram" aria-label="Telegram">
+            <img src="../assets/images/memory-demo/memory-source-telegram.png" alt="">
           </span>
-          <span class="source-icon" title="Заметки" aria-label="Заметки">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 4h7l4 4v12H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-              <path d="M14 4v5h5M8.5 13h7M8.5 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+          <span class="loader-icon drive" title="Google Drive" aria-label="Google Drive">
+            <img src="../assets/images/memory-demo/memory-source-drive.png" alt="">
           </span>
-          <span class="source-icon" title="Почта" aria-label="Почта">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5.5 6.5h13A2.5 2.5 0 0 1 21 9v7a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16V9a2.5 2.5 0 0 1 2.5-2.5Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
-              <path d="m4 8 8 5.5L20 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <span class="loader-icon mail" title="Яндекс Почта" aria-label="Яндекс Почта">
+            <img src="../assets/images/memory-demo/memory-source-yandex-mail.png" alt="">
+          </span>
+          <span class="loader-icon notes" title="Google Calendar" aria-label="Google Calendar">
+            <img src="../assets/images/memory-demo/memory-source-calendar.png" alt="">
           </span>
         </span>
       `;
-      return row;
+      return loader;
+    }
+
+    async function playContextLoader(message) {
+      message.innerHTML = "";
+      const loader = createContextLoader();
+      message.appendChild(loader);
+      await wait(180);
+
+      const icons = [...loader.querySelectorAll(".loader-icon")];
+      for (const icon of icons) {
+        icon.classList.add("is-visible");
+        await wait(310);
+      }
+
+      await wait(760);
+      loader.classList.add("is-done");
+      await wait(360);
+      message.innerHTML = "";
     }
 
     async function resetDemo() {
@@ -1064,15 +1178,13 @@
       chat.appendChild(message);
 
       await wait(1850);
-      message.innerHTML = "";
+      await playContextLoader(message);
       app.classList.add("is-reading");
 
       const text = document.createElement("span");
       text.className = "assistant-text";
       message.appendChild(text);
       await typeTextInto(text, meetingBrief, 13);
-      await wait(180);
-      message.appendChild(createContextSources());
       await wait(420);
       const highlight = document.createElement("span");
       highlight.className = "assistant-highlight";

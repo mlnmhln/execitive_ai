@@ -95,7 +95,7 @@
     }
 
     .digest-start {
-      width: min(86%, 650px);
+      width: min(88%, 690px);
       min-height: 128px;
       border: 0;
       border-radius: 999px;
@@ -103,7 +103,7 @@
       align-items: center;
       justify-content: center;
       gap: clamp(18px, 3.2vw, 28px);
-      padding: 0 56px;
+      padding: 0 clamp(32px, 5vw, 56px);
       color: var(--violet);
       background: rgba(255, 255, 255, .78);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 28px 76px rgba(55, 119, 229, .13);
@@ -125,11 +125,12 @@
 
     .digest-title {
       min-width: 0;
-      font-size: clamp(34px, 5.1vw, 56px);
+      font-size: clamp(30px, 4.35vw, 50px);
       line-height: 1;
       font-weight: 700;
       letter-spacing: 0;
-      overflow-wrap: anywhere;
+      white-space: nowrap;
+      overflow-wrap: normal;
       text-align: center;
     }
 
@@ -314,6 +315,19 @@
       background: rgba(141, 101, 223, .18);
       color: #cbb8ff;
       flex: 0 0 auto;
+    }
+
+    .file-icon.pdf-icon {
+      background: transparent;
+      overflow: hidden;
+      color: inherit;
+    }
+
+    .file-icon.pdf-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .final-report-scene .protocol-stream {
@@ -671,6 +685,10 @@
       font-weight: 700;
     }
 
+    .avatar.executive-avatar {
+      background: url('../assets/images/follow-control-demo/executive-ai-avatar.jpeg') center / cover no-repeat;
+    }
+
     .tg-title {
       justify-self: center;
       width: min(100%, 176px);
@@ -730,8 +748,10 @@
     }
 
     .tg-message {
+      position: relative;
       display: none;
-      max-width: 90%;
+      max-width: calc(90% - 38px);
+      margin-left: 38px;
       border-radius: 16px;
       padding: 8px 10px;
       color: #fff;
@@ -740,6 +760,21 @@
       opacity: 0;
       transform: translateY(12px);
       transition: opacity .42s ease, transform .52s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .tg-message::before {
+      content: "";
+      position: absolute;
+      left: -40px;
+      bottom: 3px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #1b222d;
+      background-image: var(--avatar-image);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, .08), 0 8px 18px rgba(0, 0, 0, .34);
     }
 
     .tg-message.is-visible {
@@ -784,8 +819,15 @@
 
     .tg-message.leader {
       align-self: flex-end;
+      margin-left: 0;
+      margin-right: 38px;
       background: linear-gradient(145deg, #3a9cf0, #267fd9);
       border-bottom-right-radius: 5px;
+    }
+
+    .tg-message.leader::before {
+      left: auto;
+      right: -40px;
     }
 
     .phone-scene.is-final-focus .tg-message.ai.final-control {
@@ -838,14 +880,37 @@
       font-size: 10px;
     }
 
+    .control-card {
+      display: grid;
+      gap: 4px;
+      margin-top: 8px;
+      padding: 9px;
+      border-radius: 12px;
+      background: rgba(55, 119, 229, .15);
+      box-shadow: inset 0 0 0 1px rgba(135, 180, 255, .18);
+    }
+
+    .control-card strong {
+      color: #b9d6ff;
+      font-size: 12px;
+      line-height: 1.1;
+    }
+
+    .control-card span {
+      color: rgba(255, 255, 255, .82);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
     .tg-input {
       position: relative;
       z-index: 2;
-      min-height: 76px;
+      min-height: 72px;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       gap: 8px;
-      padding: 10px 13px 20px;
+      margin: 0 0 14px;
+      padding: 8px 13px 10px;
       background: rgba(8, 12, 18, .42);
       backdrop-filter: blur(20px);
     }
@@ -860,7 +925,7 @@
       background: rgba(12, 93, 128, .78);
       color: #fff;
       flex: 0 0 auto;
-      margin-bottom: 2px;
+      margin-bottom: 0;
     }
 
     .tg-field {
@@ -937,10 +1002,10 @@
       }
 
       .digest-start {
-        width: 88%;
+        width: 92%;
         min-height: 92px;
-        gap: 16px;
-        padding: 0 24px;
+        gap: 14px;
+        padding: 0 22px;
       }
 
       .search-icon {
@@ -949,7 +1014,8 @@
       }
 
       .digest-title {
-        font-size: 31px;
+        font-size: 29px;
+        white-space: nowrap;
       }
 
       .cover-hint {
@@ -993,10 +1059,8 @@
           <div class="bubble user history-item">Выгрузи итоги сегодняшней встречи с командой</div>
           <div class="bubble assistant history-item">Готово.</div>
           <div class="system-card file-card history-item">
-            <div class="file-icon">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 3h7l4 4v14H7zM14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
+            <div class="file-icon pdf-icon">
+              <img src="../assets/images/follow-control-demo/pdf-icon.png" alt="PDF">
             </div>
             <div class="file-copy">
               <strong>protocol_product_call.pdf</strong>
@@ -1010,10 +1074,8 @@
 Я разложу решение встречи на задачи, назначу ответственных в рабочем чате, напомню о сроках и буду поднимать блокеры до тех пор, пока продукт не будет сдан клиенту.</div>
           <div class="protocol-stream">
             <div class="system-card file-card memory-item" data-step data-memory-item>
-              <div class="file-icon">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                </svg>
+              <div class="file-icon pdf-icon">
+                <img src="../assets/images/follow-control-demo/pdf-icon.png" alt="PDF">
               </div>
               <div class="file-copy">
                 <strong>execution_plan.product.pdf</strong>
@@ -1076,69 +1138,29 @@
                 <strong>Executive AI • Product</strong>
                 <span data-subtitle>4 участника</span>
               </div>
-              <div class="avatar">AI</div>
+              <div class="avatar executive-avatar"></div>
             </div>
             <div class="messages">
               <div class="message-stack" data-message-stack>
-                <div class="tg-message ai history-message">
+                <div class="tg-message ai" data-tg-message style="--avatar-image: url('../assets/images/follow-control-demo/executive-ai-avatar.jpeg')">
                   <span class="tg-name">Executive AI</span>
-                  Команда, протокол звонка готов.
-                  <br><br><b>@sofia</b> — отправить summary клиенту до 17:00.
-                  <br><b>@viktor</b> — подтвердить демо-версию продукта до пятницы.
-                  <br><b>@mikhail</b> — проверить платежи и источники данных до завтра 12:00.
+                  Задачи со встречи:<br><br><b>@sofia</b> — отправить summary клиенту до 12:00.<br><b>@viktor</b> — подготовить демо-версию и чеклист до 15:00.<br><b>@michail</b> — сверить платежи и источники данных до 17:00.
                 </div>
-                <div class="tg-message member history-message">
+                <div class="tg-message member" data-tg-message style="--avatar-image: url('../assets/images/follow-control-demo/sofia-avatar.jpg')">
                   <span class="tg-name">София</span>
-                  Принято, summary отправлю до 17:00.
+                  Принято. Работаем по плану.
                 </div>
-                <div class="tg-message member history-message">
-                  <span class="tg-name">Виктор</span>
-                  Сделано. Прикрепил актуальную демо-версию продукта.
-                  <div class="tg-file">
-                    <div class="tg-file-icon">PDF</div>
-                    <div><strong>demo.pdf</strong><span>1.4 MB</span></div>
-                  </div>
-                </div>
-                <div class="history-divider">позже</div>
-                <div class="tg-message ai" data-tg-message>
+                <div class="tg-message ai" data-tg-message style="--avatar-image: url('../assets/images/follow-control-demo/executive-ai-avatar.jpeg')">
                   <span class="tg-name">Executive AI</span>
-                  Контроль беру на себя. План на сегодня:
-                  <br><br><b>@sofia</b> — клиентский summary до 12:00.
-                  <br><b>@viktor</b> — демо-версия + чеклист до 15:00.
-                  <br><b>@mikhail</b> — платежи и источники данных до 16:00.
-                  <br><br>Напомню за час до каждого дедлайна.
+                  Статус на 15:00: 2 из 3 задач выполнены.<br><br>Михаил @michail, напоминаю про платежи, срок до 17:00
                 </div>
-                <div class="tg-message member" data-tg-message>
-                  <span class="tg-name">София</span>
-                  Summary отправлен клиенту. Жду подтверждение.
-                </div>
-                <div class="tg-message member" data-tg-message>
-                  <span class="tg-name">Виктор</span>
-                  Сделано. Прикрепил финальную демо-версию и чеклист.
-                  <div class="tg-file">
-                    <div class="tg-file-icon">PDF</div>
-                    <div><strong>demo-final.pdf</strong><span>1.9 MB</span></div>
-                  </div>
-                </div>
-                <div class="tg-message member" data-tg-message>
+                <div class="tg-message member" data-tg-message style="--avatar-image: url('../assets/images/follow-control-demo/mikhail-avatar.jpg')">
                   <span class="tg-name">Михаил</span>
-                  Нужен доступ к Stripe за пятницу, без него не закрою сверку.
+                  Доступ получил, сверку платежей закрою сегодня до 17:00.
                 </div>
-                <div class="tg-message ai" data-tg-message>
+                <div class="tg-message ai final-control" data-tg-message style="--avatar-image: url('../assets/images/follow-control-demo/executive-ai-avatar.jpeg')">
                   <span class="tg-name">Executive AI</span>
-                  Выгрузил доступные данные и отметил недостающий доступ как риск.
-                  <div class="tg-file">
-                    <div class="tg-file-icon">XLS</div>
-                    <div><strong>stripe_week_export.xlsx</strong><span>812 KB</span></div>
-                  </div>
-                </div>
-                <div class="tg-message member" data-tg-message>
-                  <span class="tg-name">Михаил</span>
-                  Сделано. Источники сверены, платежи подтверждены.
-                </div>
-                <div class="tg-message ai final-control" data-tg-message>
-                  <span class="tg-name">Executive AI</span>
-                  Все задачи закрыты. Продукт готов к передаче клиенту. Готовлю отчет руководителю.
+                  Команда, все задачи закрыты 🔥<br>Передаю отчет руководителю!
                 </div>
               </div>
             </div>
@@ -1159,10 +1181,8 @@
 
 Я разложу решение встречи на задачи, назначу ответственных в рабочем чате, напомню о сроках и буду поднимать блокеры до тех пор, пока продукт не будет сдан клиенту.</div>
             <div class="system-card file-card history-item">
-              <div class="file-icon">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                </svg>
+              <div class="file-icon pdf-icon">
+                <img src="../assets/images/follow-control-demo/pdf-icon.png" alt="PDF">
               </div>
               <div class="file-copy">
                 <strong>execution_plan.product.pdf</strong>
@@ -1172,21 +1192,18 @@
             <div class="bubble user memory-item" data-final-item>составь отчет за неделю</div>
             <div class="protocol-stream">
               <div class="system-card file-card memory-item" data-final-item>
-                <div class="file-icon">
-                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M7 3h7l4 4v14H7zM14 3v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                  </svg>
+                <div class="file-icon pdf-icon">
+                  <img src="../assets/images/follow-control-demo/pdf-icon.png" alt="PDF">
                 </div>
                 <div class="file-copy">
                   <strong>weekly_report.pdf</strong>
                 </div>
               </div>
               <div class="bubble assistant memory-item" data-final-item>Готово. В отчете за неделю:
-
-• задачи
-• сроки
-• блокеры
-• результаты для клиента</div>
+- эффективность команды
+- главные риски и блокеры
+- результаты
+- рекомендации</div>
             </div>
           </div>
         </div>
@@ -1360,16 +1377,16 @@
       const firstZoom = options.firstZoom === true;
 
       if (options.camera !== false && !firstZoom) {
-        setPhoneCamera(0, 0, 1.36);
+        setPhoneCamera(0, -96, 1.36);
         await wait(220);
       }
 
       message.classList.add("is-visible");
       await wait(40);
-      liftHistory(options.extraLift ?? 64);
+      liftHistory(options.extraLift ?? 22);
 
       if (firstZoom) {
-        setPhoneCamera(0, 0, 1.36);
+        setPhoneCamera(0, -96, 1.36);
         await wait(1400);
       }
 
@@ -1422,7 +1439,7 @@
 
       for (let index = 0; index < tgMessages.length; index += 1) {
         await revealMessage(tgMessages[index], index, { typing: tgMessages[index].classList.contains("ai"), firstZoom: index === 0 });
-        await wait(240);
+        await wait(index === 0 ? 520 : 360);
       }
 
       await wait(700);
