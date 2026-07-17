@@ -831,7 +831,7 @@ h1 {
 
 .sources-section {
   overflow: hidden;
-  padding: 138px 0 128px;
+  padding: 178px 0 128px;
   background: #000;
   color: #f6f7f9;
 }
@@ -844,18 +844,9 @@ h1 {
 
 .sources-title {
   margin: 0;
-  font-size: var(--section-title-size);
+  font-size: calc(var(--section-title-size) + 2px);
   font-weight: 600;
   line-height: 1.08;
-  letter-spacing: 0;
-}
-
-.sources-subtitle {
-  width: min(100% - 48px, 880px);
-  margin: 24px auto 0;
-  color: rgba(246, 247, 249, 0.68);
-  font-size: var(--body-large-size);
-  line-height: 1.38;
   letter-spacing: 0;
 }
 
@@ -914,13 +905,13 @@ h1 {
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
 @keyframes sourceMarqueeReverse {
   from {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 
   to {
@@ -2798,19 +2789,13 @@ h1 {
   }
 
   .sources-section {
-    padding: 88px 0 86px;
+    padding: 118px 0 86px;
   }
 
   .sources-title {
     width: min(100% - 36px, 560px);
     margin: 0 auto;
-    font-size: var(--section-title-size);
-  }
-
-  .sources-subtitle {
-    width: min(100% - 36px, 520px);
-    margin-top: 18px;
-    font-size: var(--body-size);
+    font-size: calc(var(--section-title-size) + 2px);
   }
 
   .sources-marquees {
@@ -3677,7 +3662,6 @@ h1 {
     <section class="sources-section" id="sources" aria-labelledby="sources-title">
       <div class="sources-inner">
         <h2 class="sources-title" id="sources-title">Интеграция с 30+ источниками</h2>
-        <p class="sources-subtitle">Не нужно менять привычные источники хранения данных.</p>
         <div class="sources-marquees" aria-hidden="true">
           <div class="sources-marquee-row">
             <div class="source-icons-set">
@@ -3704,8 +3688,56 @@ h1 {
               <span class="source-icon-card"><img src="assets/images/app-icons/notion.svg" alt="" /></span>
               <span class="source-icon-card"><img src="assets/images/app-icons/trello.svg" alt="" /></span>
             </div>
+            <div class="source-icons-set">
+              <span class="source-icon-card"><img src="assets/images/app-icons/telegram.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/whatsapp.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/gmail.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-mail.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-drive.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-disk.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-docs.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-sheets.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/notion.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/trello.svg" alt="" /></span>
+            </div>
+            <div class="source-icons-set">
+              <span class="source-icon-card"><img src="assets/images/app-icons/telegram.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/whatsapp.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/gmail.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-mail.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-drive.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-disk.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-docs.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-sheets.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/notion.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/trello.svg" alt="" /></span>
+            </div>
           </div>
           <div class="sources-marquee-row reverse">
+            <div class="source-icons-set">
+              <span class="source-icon-card"><img src="assets/images/app-icons/teams.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/zoom.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-meet.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-telemost.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/bitrix24.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-calendar.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-calendar.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/mailru.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/notes.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/phone.png" alt="" /></span>
+            </div>
+            <div class="source-icons-set">
+              <span class="source-icon-card"><img src="assets/images/app-icons/teams.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/zoom.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-meet.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-telemost.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/bitrix24.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/google-calendar.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/yandex-calendar.png" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/mailru.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/notes.svg" alt="" /></span>
+              <span class="source-icon-card"><img src="assets/images/app-icons/phone.png" alt="" /></span>
+            </div>
             <div class="source-icons-set">
               <span class="source-icon-card"><img src="assets/images/app-icons/teams.svg" alt="" /></span>
               <span class="source-icon-card"><img src="assets/images/app-icons/zoom.svg" alt="" /></span>
@@ -4543,7 +4575,6 @@ h1 {
             '.feature-section .feature-visual',
             '.feature-section .visual-card',
             '.sources-section h2',
-            '.sources-section p',
             '.sources-section .sources-marquee-row',
             '.unified-section h2',
             '.unified-section .integration-stage',
