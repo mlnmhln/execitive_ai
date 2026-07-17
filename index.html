@@ -191,6 +191,10 @@ a {
   align-items: center;
 }
 
+.menu-toggle {
+  display: none;
+}
+
 .brand {
   font-size: 22px;
   font-weight: 600;
@@ -2600,38 +2604,95 @@ h1 {
   }
 
   .site-header {
-    position: relative;
-    grid-template-columns: 1fr auto;
-    min-height: auto;
-    padding: 18px;
+    position: sticky;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px;
+    min-height: 70px;
+    padding: 12px 14px;
+    z-index: 60;
   }
 
   .brand {
+    justify-self: start;
     font-size: var(--brand-size);
   }
 
-  .nav-links {
-    grid-column: 1 / -1;
-    order: 3;
-    justify-content: center;
-    gap: clamp(14px, 3.2vw, 24px);
-    flex-wrap: wrap;
-    overflow-x: hidden;
-    width: 100%;
-    margin: 4px auto 0;
-    padding: 12px 2px 4px;
-    text-align: center;
-    white-space: normal;
-    scrollbar-width: none;
+  .menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
   }
 
-  .nav-links::-webkit-scrollbar {
-    display: none;
+  .menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+
+  .site-header.is-menu-open .menu-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .site-header.is-menu-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .site-header.is-menu-open .menu-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-links {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 1px);
+    width: min(50vw, 260px);
+    display: grid;
+    gap: 0;
+    padding: 12px 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 0;
+    border-radius: 0 18px 18px 0;
+    background: rgba(10, 10, 11, 0.96);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-12px) translateY(-8px);
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+
+  .site-header.is-menu-open .nav-links {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) translateY(0);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 13px 18px;
+    font-size: 15px;
+    line-height: 1.2;
+    text-align: left;
+    white-space: normal;
   }
 
   .header-cta {
-    min-width: 145px;
+    min-width: 0;
     min-height: 40px;
+    padding: 0 18px;
+    font-size: 14px;
   }
 
   .hero {
@@ -3196,7 +3257,12 @@ h1 {
   }
 
   .case-logo {
+    color: #f6f7f9;
     font-size: var(--visual-label-size);
+  }
+
+  .case-logo span {
+    color: #f6f7f9;
   }
 
   .result-stat + .result-stat {
@@ -3488,11 +3554,17 @@ h1 {
   </head>
   <body>
     <header class="site-header" aria-label="Главная навигация">
+      <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
       <a class="brand" href="#hero" aria-label="Executive AI">
         <span>Executive AI</span>
       </a>
 
-      <nav class="nav-links" aria-label="Разделы">
+      <nav class="nav-links" id="site-nav" aria-label="Разделы">
         <a href="#hero">Главная</a>
         <a href="#problem">Проблема</a>
         <a href="#features">Возможности</a>
@@ -4519,6 +4591,50 @@ h1 {
       (function () {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        function setupMobileMenu() {
+          const header = document.querySelector('.site-header');
+          const toggle = document.querySelector('.menu-toggle');
+          const nav = document.querySelector('.nav-links');
+          const mobileQuery = window.matchMedia('(max-width: 820px)');
+          if (!header || !toggle || !nav) return;
+
+          function closeMenu() {
+            header.classList.remove('is-menu-open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-label', 'Открыть меню');
+          }
+
+          function openMenu() {
+            header.classList.add('is-menu-open');
+            toggle.setAttribute('aria-expanded', 'true');
+            toggle.setAttribute('aria-label', 'Закрыть меню');
+          }
+
+          toggle.addEventListener('click', () => {
+            if (!mobileQuery.matches) return;
+            if (header.classList.contains('is-menu-open')) {
+              closeMenu();
+            } else {
+              openMenu();
+            }
+          });
+
+          nav.addEventListener('click', (event) => {
+            if (event.target.closest('a')) closeMenu();
+          });
+
+          document.addEventListener('click', (event) => {
+            if (!header.classList.contains('is-menu-open')) return;
+            if (!header.contains(event.target)) closeMenu();
+          });
+
+          document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeMenu();
+          });
+
+          mobileQuery.addEventListener?.('change', closeMenu);
+        }
+
         function setupTextReveal() {
           function splitLines(element) {
             if (!element || element.dataset.motionSplit === 'true') return;
@@ -4658,6 +4774,8 @@ h1 {
 
           textTargets.forEach((element) => revealObserver.observe(element));
         }
+
+        setupMobileMenu();
 
         setupTextReveal();
 
