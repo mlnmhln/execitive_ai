@@ -443,6 +443,7 @@ h1 {
   margin: 0 auto;
   border-radius: 20px;
   background: #111;
+  cursor: pointer;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.08),
     0 24px 70px rgba(0, 0, 0, 0.48);
@@ -525,6 +526,84 @@ h1 {
   fill: #fff;
 }
 
+.video-scrubber-wrap {
+  position: absolute;
+  left: clamp(18px, 3vw, 42px);
+  right: clamp(18px, 3vw, 42px);
+  bottom: clamp(16px, 2.6vw, 34px);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.video-card.is-playing .video-scrubber-wrap,
+.video-card.has-video .video-scrubber-wrap {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.video-scrubber {
+  --progress: 0%;
+  width: 100%;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.video-scrubber:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.video-scrubber::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan) 0 var(--progress), rgba(255, 255, 255, 0.34) var(--progress) 100%);
+}
+
+.video-scrubber::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  margin-top: -6.5px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--cyan);
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.34);
+}
+
+.video-scrubber::-moz-range-track {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.video-scrubber::-moz-range-progress {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--cyan);
+}
+
+.video-scrubber::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.34);
+}
+
 .control-section {
   display: flex;
   align-items: center;
@@ -558,6 +637,7 @@ h1 {
   font-size: var(--subtitle-size);
   line-height: var(--copy-line-height);
   font-weight: 400;
+  text-wrap: balance;
   color: rgba(246, 247, 249, 0.9);
 }
 
@@ -2627,6 +2707,7 @@ h1 {
     min-height: 70px;
     padding: 12px 14px;
     z-index: 60;
+    overflow: visible;
   }
 
   .brand {
@@ -2786,6 +2867,7 @@ h1 {
   }
 
   .control-copy {
+    max-width: 360px;
     font-size: var(--subtitle-size);
   }
 
@@ -3627,15 +3709,18 @@ h1 {
           </a>
         </div>
 
-        <a class="video-card motion-reveal" href="#" aria-label="Смотреть видео об Executive AI">
-          <video class="hero-video" src="assets/video/executive-ai-demo.mp4" poster="assets/video/executive-ai-demo-poster.png" preload="none" playsinline></video>
+        <div class="video-card motion-reveal" role="button" tabindex="0" aria-label="Смотреть видео об Executive AI">
+          <video class="hero-video" data-src="assets/video/executive-ai-demo.mp4" poster="assets/video/executive-ai-demo-poster.png" preload="none" playsinline></video>
           <img src="assets/video/executive-ai-demo-poster.png" alt="" />
           <span class="play" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="M9 7.6v8.8L16.4 12 9 7.6z" />
             </svg>
           </span>
-        </a>
+          <span class="video-scrubber-wrap">
+            <input class="video-scrubber" type="range" min="0" max="1000" value="0" step="1" aria-label="Перемотка видео" disabled />
+          </span>
+        </div>
       </section>
     </main>
 
@@ -3647,8 +3732,7 @@ h1 {
         </h2>
 
         <p class="control-copy">
-          Компания растет, коммуникаций становится больше,<br />
-          решений больше, задач больше, а управленческий контекст распадается.
+          Компания растет, коммуникаций становится больше, решений больше, задач больше, а управленческий контекст распадается.
         </p>
 
         <p class="control-label">Информация лежит везде:</p>
@@ -5128,18 +5212,78 @@ h1 {
 
         const heroVideoCard = document.querySelector('.video-card');
         const heroVideo = heroVideoCard ? heroVideoCard.querySelector('.hero-video') : null;
-        heroVideoCard?.addEventListener('click', (event) => {
-          event.preventDefault();
+        const heroScrubber = heroVideoCard ? heroVideoCard.querySelector('.video-scrubber') : null;
+        let isScrubbingHeroVideo = false;
+        function loadHeroVideo() {
+          if (!heroVideo || heroVideo.src) return;
+          const source = heroVideo.dataset.src;
+          if (!source) return;
+          heroVideo.src = source;
+          heroVideo.load();
+        }
+
+        function updateHeroScrubber() {
+          if (!heroVideo || !heroScrubber || !Number.isFinite(heroVideo.duration) || heroVideo.duration <= 0) return;
+          const value = Math.round((heroVideo.currentTime / heroVideo.duration) * Number(heroScrubber.max));
+          heroScrubber.value = String(value);
+          heroScrubber.style.setProperty('--progress', `${value / Number(heroScrubber.max) * 100}%`);
+        }
+
+        function toggleHeroVideo() {
           if (!heroVideo) return;
           if (heroVideo.paused) {
-            heroVideo.play();
+            loadHeroVideo();
+            heroVideo.play().catch(() => {});
           } else {
             heroVideo.pause();
           }
+        }
+
+        heroVideoCard?.addEventListener('click', (event) => {
+          if (event.target.closest('.video-scrubber')) return;
+          toggleHeroVideo();
         });
-        heroVideo?.addEventListener('play', () => heroVideoCard?.classList.add('is-playing'));
+
+        heroVideoCard?.addEventListener('keydown', (event) => {
+          if (event.target.closest('.video-scrubber')) return;
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          toggleHeroVideo();
+        });
+
+        heroScrubber?.addEventListener('pointerdown', () => {
+          isScrubbingHeroVideo = true;
+        });
+
+        heroScrubber?.addEventListener('pointerup', () => {
+          isScrubbingHeroVideo = false;
+        });
+
+        heroScrubber?.addEventListener('pointercancel', () => {
+          isScrubbingHeroVideo = false;
+        });
+
+        heroScrubber?.addEventListener('input', () => {
+          if (!heroVideo || !heroScrubber || !Number.isFinite(heroVideo.duration) || heroVideo.duration <= 0) return;
+          const ratio = Number(heroScrubber.value) / Number(heroScrubber.max);
+          heroScrubber.style.setProperty('--progress', `${ratio * 100}%`);
+          heroVideo.currentTime = ratio * heroVideo.duration;
+        });
+
+        heroVideo?.addEventListener('loadedmetadata', () => {
+          if (heroScrubber) heroScrubber.disabled = false;
+          heroVideoCard?.classList.add('has-video');
+          updateHeroScrubber();
+        });
+        heroVideo?.addEventListener('timeupdate', () => {
+          if (!isScrubbingHeroVideo) updateHeroScrubber();
+        });
+        heroVideo?.addEventListener('play', () => heroVideoCard?.classList.add('is-playing', 'has-video'));
         heroVideo?.addEventListener('pause', () => heroVideoCard?.classList.remove('is-playing'));
-        heroVideo?.addEventListener('ended', () => heroVideoCard?.classList.remove('is-playing'));
+        heroVideo?.addEventListener('ended', () => {
+          heroVideoCard?.classList.remove('is-playing');
+          updateHeroScrubber();
+        });
 
         const finalSection = document.querySelector('.final-cta-section');
         if (finalSection && 'IntersectionObserver' in window) {
