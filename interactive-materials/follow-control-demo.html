@@ -50,7 +50,7 @@
     }
 
     .digest-demo::before {
-      content: "";
+      content: none;
       position: absolute;
       width: 116%;
       height: 116%;
@@ -136,7 +136,7 @@
     .cover-hint {
       margin: 0;
       color: rgba(255, 255, 255, .88);
-      font-size: 19px;
+      font-size: var(--cover-hint-size, 19px);
       line-height: 1.2;
       font-weight: 500;
       text-align: center;
@@ -953,7 +953,8 @@
       }
 
       .cover-hint {
-        font-size: 15px;
+        font-size: var(--cover-hint-size, 20px);
+        font-weight: 600;
       }
 
       .memory-scene {
@@ -1223,6 +1224,18 @@
   </section>
 
   <script>
+    window.addEventListener('message', (event) => {
+      const payload = event.data;
+      if (!payload || payload.type !== 'executive-ai-embed-size') return;
+      const width = Number(payload.width);
+      const scale = Number(payload.scale);
+      if (!Number.isFinite(width) || !Number.isFinite(scale) || scale <= 0) return;
+      const hintSize = width <= 560
+        ? Math.min(60, Math.max(24, 17 / scale))
+        : 19;
+      document.documentElement.style.setProperty('--cover-hint-size', `${hintSize}px`);
+    });
+
     const cover = document.querySelector("[data-cover]");
     const app = document.querySelector("[data-app]");
     const start = document.querySelector("[data-start]");
