@@ -3907,11 +3907,13 @@ h1 {
 }
 
 .security-icon {
-  display: grid;
+  display: flex;
   flex: 0 0 58px;
   width: 58px;
   height: 58px;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
   border: 1px solid rgba(246, 247, 249, 0.18);
   border-radius: 10px;
 }
@@ -3926,6 +3928,7 @@ h1 {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.7;
+  transform: translateY(1px);
 }
 
 .deployment-note > div > strong,
