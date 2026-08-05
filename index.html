@@ -4574,7 +4574,7 @@ h1 {
         </div>
 
         <div class="video-card motion-reveal" role="button" tabindex="0" aria-label="Смотреть видео об Executive AI">
-          <video class="hero-video" data-src="assets/video/executive-ai-demo.mp4" poster="assets/video/executive-ai-demo-poster.png" preload="none" playsinline></video>
+          <video class="hero-video" data-src="assets/video/executive-ai-overview.mp4" poster="assets/video/executive-ai-demo-poster.png" preload="none" playsinline></video>
           <img src="assets/video/executive-ai-demo-poster.png" alt="" />
           <span class="play" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -4954,37 +4954,147 @@ h1 {
       </div>
     </section>
 
-    <section class="pricing-section" id="pricing" aria-labelledby="pricing-title">
-      <div class="pricing-inner">
-        <div class="pricing-heading">
-          <h2 id="pricing-title">Выберите формат<br />под ваши задачи</h2>
+    <section class="plans-section" id="pricing" aria-labelledby="plans-title">
+      <div class="plans-inner">
+        <div class="plans-heading">
+          <h2 id="plans-title">
+            Выберите формат<br />
+            под ваши задачи
+          </h2>
           <p>Прозрачные условия и максимум пользы для вас и вашей команды.</p>
         </div>
-        <div class="pricing-grid">
-          <article class="pricing-card">
+
+        <div class="plans-grid">
+          <article class="plan-card">
             <h3>Демо</h3>
-            <p class="pricing-card-description">Для знакомства<br />с Executive AI</p>
-            <div class="pricing-card-price"><strong>0 ₽</strong><span>/ месяц</span></div>
-            <a class="pricing-action is-primary" href="#" data-lead-trigger><span>Запросить демо</span><span aria-hidden="true">↗</span></a>
+            <p class="plan-copy">Для знакомства<br />с Executive AI</p>
+            <div class="plan-price">0 ₽ <span>/ месяц</span></div>
+            <a class="plan-button demo-button" href="#" data-lead-trigger>
+              <span>Запросить демо</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-demo" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-demo">
+              <li>Онлайн-демонстрация продукта</li>
+              <li>Разбор одного рабочего сценария</li>
+              <li>Ответы на ваши вопросы</li>
+              <li>Рекомендации по внедрению</li>
+              <li>Оценка сценария использования</li>
+            </ul>
           </article>
-          <article class="pricing-card">
+
+          <article class="plan-card">
             <h3>Personal</h3>
-            <p class="pricing-card-description">Для индивидуальной работы<br />и экспертов</p>
-            <div class="pricing-card-price"><strong>4 900 ₽</strong><span>/ месяц</span></div>
-            <a class="pricing-action" href="#" data-lead-trigger><span>Начать использовать</span><span aria-hidden="true">↗</span></a>
+            <p class="plan-copy">Для индивидуальной работы<br />и экспертов</p>
+            <div class="plan-price">4 900 ₽ <span>/ месяц</span></div>
+            <a class="plan-button" href="#" data-lead-trigger>
+              <span>Начать использовать</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-personal" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-personal">
+              <li>Безлимитные проекты</li>
+              <li>Безлимитные задачи</li>
+              <li>Безлимитный контекст и память</li>
+              <li>Memory</li>
+              <li>Digest &amp; Analysis</li>
+              <li>Follow &amp; Control</li>
+              <li>Telegram</li>
+              <li>Web Workspace</li>
+              <li>Подключение документов и встреч</li>
+              <li>AI-поиск по контексту</li>
+              <li>Ежедневные digest</li>
+              <li>Регулярные обновления</li>
+            </ul>
           </article>
-          <article class="pricing-card">
+
+          <article class="plan-card">
             <h3>Pro</h3>
-            <p class="pricing-card-description">Для бизнеса<br />и управления проектами</p>
-            <div class="pricing-card-price"><strong>12 900 ₽</strong><span>/ месяц</span></div>
-            <a class="pricing-action" href="#" data-lead-trigger><span>Начать использовать</span><span aria-hidden="true">↗</span></a>
+            <p class="plan-copy">Для бизнеса<br />и управления проектами</p>
+            <div class="plan-price">12 900 ₽ <span>/ месяц</span></div>
+            <a class="plan-button" href="#" data-lead-trigger>
+              <span>Начать использовать</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-pro" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-pro">
+              <li>Безлимитные проекты</li>
+              <li>Безлимитные задачи</li>
+              <li>Безлимитный контекст и память</li>
+              <li>Memory</li>
+              <li>Digest &amp; Analysis</li>
+              <li>Follow &amp; Control</li>
+              <li>Telegram</li>
+              <li>Web Workspace</li>
+              <li>Подключение документов, встреч и почты</li>
+              <li>Интеграции с CRM, Notion, Google Workspace</li>
+              <li>Пользователи и роли</li>
+              <li>Приоритетная поддержка</li>
+              <li>Расширенная аналитика и отчеты</li>
+              <li>SSO и аудит действий</li>
+            </ul>
           </article>
-          <article class="pricing-card">
+
+          <article class="plan-card">
             <h3>Custom</h3>
-            <p class="pricing-card-description">Индивидуальное<br />решение</p>
-            <div class="pricing-card-price is-custom"><strong>Индивидуальные условия</strong></div>
-            <a class="pricing-action" href="#" data-lead-trigger><span>Обсудить проект</span><span aria-hidden="true">↗</span></a>
+            <p class="plan-copy">Индивидуальное<br />решение</p>
+            <div class="plan-price custom-price">Индивидуальная стоимость</div>
+            <a class="plan-button" href="#" data-lead-trigger>
+              <span>Обсудить проект</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-custom" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-custom">
+              <li>Индивидуальная настройка продукта</li>
+              <li>Построение процессов и сценариев</li>
+              <li>Настройка AI-агентов под ваши задачи</li>
+              <li>Интеграции с любыми системами</li>
+              <li>Корпоративное хранилище данных</li>
+              <li>Роли и права доступа</li>
+              <li>Персональный onboarding и обучение</li>
+              <li>Консалтинг по внедрению</li>
+              <li>SLA и приоритетная поддержка</li>
+            </ul>
           </article>
+        </div>
+
+        <div class="plans-security">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 11V8a5 5 0 0 1 10 0v3" />
+            <path d="M6.5 11h11A1.5 1.5 0 0 1 19 12.5v6A1.5 1.5 0 0 1 17.5 20h-11A1.5 1.5 0 0 1 5 18.5v-6A1.5 1.5 0 0 1 6.5 11Z" />
+          </svg>
+          <span>Ваши данные принадлежат только вам и не используются для обучения моделей.</span>
+          <a href="#faq-security" data-faq-security-link>
+            <span>Подробнее о безопасности</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 17 17 7" />
+              <path d="M9 7h8v8" />
+            </svg>
+          </a>
         </div>
       </div>
     </section>
