@@ -4963,7 +4963,7 @@ h1 {
             <h3>Демо</h3>
             <p class="plan-copy">Для знакомства<br />с Executive AI</p>
             <div class="plan-price">0 ₽ <span>/ месяц</span></div>
-            <a class="plan-button demo-button" href="#" data-lead-trigger>
+            <a class="plan-button demo-button" href="#" data-lead-trigger data-demo-telegram>
               <span>Запросить демо</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 17 17 7" />
@@ -6256,8 +6256,12 @@ h1 {
         const phoneInput = form ? form.querySelector('input[name="phone"]') : null;
         const telegramInput = form ? form.querySelector('input[name="telegram"]') : null;
         const status = form ? form.querySelector('.lead-status') : null;
+        const submitButton = form ? form.querySelector('.lead-submit') : null;
         const closeButton = modal ? modal.querySelector('.lead-close') : null;
         const modalTriggers = document.querySelectorAll('.header-cta, .primary-btn, .text-btn, .secondary-link, .learn-btn, .plan-button, .final-primary, .final-link, [data-lead-trigger]');
+        const demoTelegramUrl = 'https://t.me/ExecutiveAIDemoBot?start=WR6UMNZKI1';
+        const defaultSubmitLabel = submitButton?.textContent || 'Отправить заявку';
+        let isDemoTelegramFlow = false;
 
         function setModalOpen(isOpen) {
           if (!modal) return;
@@ -6296,6 +6300,13 @@ h1 {
         modalTriggers.forEach((trigger) => {
           trigger.addEventListener('click', (event) => {
             event.preventDefault();
+            isDemoTelegramFlow = trigger.matches('[data-demo-telegram]');
+            if (submitButton) {
+              submitButton.textContent = isDemoTelegramFlow
+                ? 'Получить демо в Telegram'
+                : defaultSubmitLabel;
+            }
+            if (status) status.textContent = '';
             setModalOpen(true);
           });
         });
@@ -6332,6 +6343,7 @@ h1 {
           if (!form.reportValidity()) return;
 
           const submit = form.querySelector('.lead-submit');
+          const shouldOpenDemoTelegram = isDemoTelegramFlow;
           const data = new FormData(form);
           const payload = {
             name: String(data.get('name') || '').trim(),
@@ -6339,7 +6351,9 @@ h1 {
             telegram: String(data.get('telegram') || '').trim(),
             comment: String(data.get('comment') || '').trim(),
             consent: Boolean(data.get('consent')),
-            source: 'Executive AI landing',
+            source: shouldOpenDemoTelegram
+              ? 'Executive AI landing — Demo tariff'
+              : 'Executive AI landing',
           };
 
           if (submit) submit.disabled = true;
@@ -6353,7 +6367,12 @@ h1 {
             });
             if (!response.ok) throw new Error('Request failed');
             form.reset();
-            if (status) status.textContent = 'Спасибо, заявка отправлена.';
+            if (shouldOpenDemoTelegram) {
+              if (status) status.textContent = 'Заявка сохранена. Открываем Telegram...';
+              window.location.assign(demoTelegramUrl);
+            } else if (status) {
+              status.textContent = 'Спасибо, заявка отправлена.';
+            }
           } catch (error) {
             if (status) status.textContent = 'Не удалось отправить. Попробуйте еще раз.';
           } finally {
