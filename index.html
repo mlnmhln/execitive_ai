@@ -329,7 +329,8 @@ a {
 .header-cta {
   min-width: 172px;
   min-height: 46px;
-  font-size: calc(var(--button-font-size) - 2px);
+  padding-inline: 18px;
+  font-size: calc(var(--button-font-size) - 3px);
 }
 
 .menu-button {
@@ -407,7 +408,7 @@ h1 {
 .hero-actions {
   justify-content: center;
   gap: 34px;
-  margin: 48px 0 86px;
+  margin: 24px 0 40px;
 }
 
 .primary-btn {
@@ -994,6 +995,9 @@ h1 {
   display: grid;
   gap: 28px;
   margin-top: 76px;
+  /* Keep the bottom row and its shadow inside the horizontal fade mask. */
+  padding: 4px 0 36px;
+  margin-bottom: -36px;
   mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
 }
 
@@ -2605,6 +2609,20 @@ h1 {
   color: #f6f7f9;
   text-decoration: underline;
   text-decoration-color: rgba(246, 247, 249, 0.88);
+  text-underline-offset: 4px;
+}
+
+.privacy-notice {
+  margin: -2px 0 0;
+  color: rgba(246, 247, 249, 0.54);
+  font-size: var(--small-size);
+  line-height: 1.4;
+}
+
+.privacy-notice a {
+  color: rgba(246, 247, 249, 0.82);
+  text-decoration: underline;
+  text-decoration-color: rgba(246, 247, 249, 0.6);
   text-underline-offset: 4px;
 }
 
@@ -4226,6 +4244,11 @@ h1 {
   border: 1px solid rgba(246, 247, 249, 0.15);
   border-radius: 8px;
   background: #060708;
+  transition: border-color 180ms ease;
+}
+
+.enterprise-card:hover {
+  border-color: var(--cyan);
 }
 
 .enterprise-card h4 {
@@ -4527,6 +4550,67 @@ h1 {
   .footer-columns { grid-template-columns: 1fr; }
   .site-footer--structured { padding: 56px 18px 24px; }
 }
+
+/* Product offers. */
+#pricing { scroll-margin-top: 100px; }
+.offer-demo { margin-top: 36px; text-align: center; }
+.offer-demo p { color: rgba(246, 247, 249, 0.68); font-size: var(--body-size); }
+.demo-link { color: var(--cyan); font-size: var(--body-size); line-height: 1.5; }
+.demo-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Case cards added alongside the original testimonials for local comparison. */
+.project-cases-heading { margin-top: 60px; scroll-margin-top: 100px; }
+.project-cases-heading h3 { margin: 0; color: #f6f7f9; font-size: 24px; font-weight: 500; }
+.project-cases-grid { margin-top: 28px; }
+.project-case-label { margin: 0 0 12px; color: var(--cyan); font-size: 13px; line-height: 1.4; }
+.project-case-list { margin: 0; padding-left: 18px; color: rgba(246,247,249,.84); font-size: 15px; line-height: 1.5; }
+.project-case-list li + li { margin-top: 10px; }
+.project-case-list li::marker { color: var(--cyan); }
+.project-case-person { display: flex; align-items: center; gap: 12px; margin: 0 0 22px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,.1); }
+.project-avatar { display: grid; place-items: center; width: 64px; height: 64px; flex: 0 0 64px; border-radius: 50%; overflow: hidden; background: #171b1f; }
+.project-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+.project-avatar:not(.is-logo) img { transform: scale(1.45); transform-origin: center top; }
+.project-avatar.is-logo { background: #090a0b; padding: 7px; }
+.project-avatar.is-logo img { object-fit: contain; object-position: center; }
+.project-avatar.is-light { background: #f4f5f7; }
+.project-avatar.is-tatiana img { transform: scale(1.2); transform-origin: center; }
+.project-avatar.is-makeitsense { padding: 0; }
+.project-avatar.is-gate { background: #fff; padding: 3px; }
+.project-avatar.is-gate img { transform: scale(1.15); }
+.project-initials { color: var(--cyan); font-size: 20px; border: 1px solid rgba(0,199,232,.2); }
+.project-case-name { margin: 0; color: #f6f7f9; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.project-case-role { margin-top: 4px; color: rgba(246,247,249,.62); font-size: 12px; line-height: 1.4; }
+.project-cases-grid:focus-visible { outline: 1px solid var(--cyan); outline-offset: 6px; border-radius: 20px; }
+@media (min-width: 821px) and (max-width: 1100px) {
+  .project-cases-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 820px) {
+  .project-cases-heading { margin-top: 42px; }
+  .project-cases-heading h3 { font-size: 21px; }
+  .project-cases-grid { margin-top: 24px; }
+  .project-case-list { font-size: 14px; }
+}
+
+/* Official INSIGHTERS wordmark: Manrope 800 with 0.32em tracking. */
+@font-face {
+  font-family: 'Insighters Wordmark';
+  src: url('assets/images/cases/insighters-wordmark.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+.project-avatar.is-insighters { background: #060b16; }
+.insighters-wordmark { font-family: 'Insighters Wordmark', sans-serif; font-size: 6.4px; font-weight: 800; letter-spacing: .32em; padding-left: .32em; color: #fff; white-space: nowrap; line-height: 1; }
+.person-avatar.is-margarita { overflow: hidden; }
+.person-avatar.is-margarita img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.6); transform-origin: 46% 32%; }
+
+/* Confirmation shown only after the lead API accepts the request. */
+.lead-form[hidden], .lead-success[hidden] { display: none; }
+.lead-success { display: grid; justify-items: center; gap: 20px; padding: 8px 0 6px; text-align: center; }
+.lead-success-check { display: grid; place-items: center; width: 64px; height: 64px; border: 1px solid rgba(0,199,232,.35); border-radius: 50%; background: rgba(0,199,232,.1); color: var(--cyan); }
+.lead-success-check svg { width: 30px; height: 30px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lead-success p { margin: 0; color: rgba(246,247,249,.8); font-size: 16px; line-height: 1.5; }
+.lead-success-demo { justify-self: center; max-width: 100%; padding: 12px 24px; background: var(--cyan); white-space: normal; }
     </style>
   </head>
   <body>
@@ -4544,9 +4628,9 @@ h1 {
         <span>Executive AI</span>
       </a>
 
-      <nav class="nav-links" id="site-nav" aria-label="Основные разделы"><a href="index.html" aria-current="page">Главная</a><a href="product-pages/product.html">Продукт</a><a href="for-pages/for.html">Для кого</a><a href="product-pages/integrations.html">Интеграции</a><a href="product-pages/security.html">Безопасность</a><a href="#results">Результаты</a><div class="mobile-nav-details"><section class="mobile-nav-group"><h2>Главная</h2><nav><a href="index.html#hero">Обзор</a><a href="index.html#results">Результаты</a><a href="index.html#reviews">Отзывы</a><a href="index.html#deployment">Варианты подключения</a><a href="index.html#subscription">Подписка и модели</a></nav></section><section class="mobile-nav-group"><h2>Продукт</h2><nav><a href="product-pages/product.html">Обзор продукта</a><a href="product-pages/how-it-works.html">Как это работает</a><a href="product-pages/functions.html">Рабочие сценарии</a><a href="product-pages/integrations.html">Интеграции</a><a href="product-pages/technology.html">Технология</a><a href="product-pages/security.html">Безопасность</a><a href="product-pages/compare.html">Сравнение</a><a href="product-pages/pilot.html">Пилот</a></nav></section><section class="mobile-nav-group"><h2>Возможности</h2><nav><a href="product-pages/business-memory.html">Business Memory</a><a href="product-pages/digest-analysis.html">Digest &amp; Analysis</a><a href="product-pages/follow-control.html">Follow &amp; Control</a></nav></section><section class="mobile-nav-group"><h2>Для кого</h2><nav><a href="for-pages/for.html">Все решения</a><a href="for-pages/for-ceo.html">CEO</a><a href="for-pages/for-heads.html">Руководители</a><a href="for-pages/for-team.html">Команды</a><a href="for-pages/for-project-teams.html">Проектные команды</a><a href="for-pages/for-operations.html">Операции</a><a href="for-pages/for-consultants.html">Консультанты</a><a href="for-pages/for-enterprise.html">Enterprise</a></nav></section><section class="mobile-nav-group"><h2>Компания</h2><nav><a href="denis-dvoryankin.html">Денис Дворянкин</a><a href="privacy-policy.html">Конфиденциальность</a><a href="personal-data-consent.html">Обработка данных</a></nav></section><a class="mobile-nav-cta" href="index.html#deployment"><span>Запросить пилот</span><span aria-hidden="true">→</span></a></div></nav>
+      <nav class="nav-links" id="site-nav" aria-label="Основные разделы"><a href="index.html" aria-current="page">Главная</a><a href="product-pages/product.html">Продукт</a><a href="for-pages/for.html">Для кого</a><a href="product-pages/integrations.html">Интеграции</a><a href="product-pages/security.html">Безопасность</a><a href="#results">Результаты</a><div class="mobile-nav-details"><section class="mobile-nav-group"><h2>Главная</h2><nav><a href="index.html#hero">Обзор</a><a href="index.html#results">Результаты</a><a href="index.html#reviews">Отзывы</a><a href="index.html#deployment">Варианты подключения</a></nav></section><section class="mobile-nav-group"><h2>Продукт</h2><nav><a href="product-pages/product.html">Обзор продукта</a><a href="product-pages/how-it-works.html">Как это работает</a><a href="product-pages/functions.html">Рабочие сценарии</a><a href="product-pages/integrations.html">Интеграции</a><a href="product-pages/technology.html">Технология</a><a href="product-pages/security.html">Безопасность</a><a href="product-pages/compare.html">Сравнение</a><a href="product-pages/pilot.html">Пилот</a></nav></section><section class="mobile-nav-group"><h2>Возможности</h2><nav><a href="product-pages/business-memory.html">Business Memory</a><a href="product-pages/digest-analysis.html">Digest &amp; Analysis</a><a href="product-pages/follow-control.html">Follow &amp; Control</a></nav></section><section class="mobile-nav-group"><h2>Для кого</h2><nav><a href="for-pages/for.html">Все решения</a><a href="for-pages/for-ceo.html">CEO</a><a href="for-pages/for-heads.html">Руководители</a><a href="for-pages/for-team.html">Команды</a><a href="for-pages/for-project-teams.html">Проектные команды</a><a href="for-pages/for-operations.html">Операции</a><a href="for-pages/for-consultants.html">Консультанты</a><a href="for-pages/for-enterprise.html">Enterprise</a></nav></section><section class="mobile-nav-group"><h2>Компания</h2><nav><a href="denis-dvoryankin.html">Денис Дворянкин</a><a href="privacy-policy.html">Конфиденциальность</a><a href="personal-data-consent.html">Обработка данных</a></nav></section><a class="mobile-nav-cta" href="index.html#deployment"><span>Запросить пилот</span><span aria-hidden="true">→</span></a></div></nav>
 
-      <a class="header-cta" href="#">Запросить пилот</a>
+      <a class="header-cta" href="#">Обсудить внедрение</a>
     </header>
 
     <main class="hero" id="hero">
@@ -4563,7 +4647,7 @@ h1 {
         </p>
 
         <div class="hero-actions motion-reveal">
-          <a class="primary-btn" href="#">Запросить пилот</a>
+          <a class="primary-btn" href="https://t.me/eaidemo_bot?start=WR6UMNZKI1" data-demo-link target="_blank" rel="noopener">Попробовать демо в Telegram</a>
           <a class="text-btn" href="#">
             <span>Получить консультацию</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -4587,6 +4671,9 @@ h1 {
         </div>
       </section>
     </main>
+
+
+
 
     <section class="control-section" id="problem" aria-labelledby="control-title">
       <div class="control-content">
@@ -4931,167 +5018,16 @@ h1 {
           <span class="security-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2.1 0 4.45-1.18 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.55 3.82 16.9 5 19 5a1 1 0 0 1 1 1Z"/><rect width="8" height="6" x="8" y="11" rx="1"/><path d="M10 11V9a2 2 0 1 1 4 0v2"/></svg></span>
           <div><strong>Ваши данные принадлежат только вам.</strong><span>Облачная версия работает по подписке. Для полного контроля доступно локальное развёртывание.</span></div>
         </div>
-      </div>
-    </section>
-
-    <section class="waitlist-section" aria-labelledby="waitlist-title">
-      <div class="waitlist-inner">
-        <div class="waitlist-layout">
-          <div class="waitlist-copy">
-            <p class="section-kicker-cyan">Облачная версия</p>
-            <h2 id="waitlist-title">Облачная версия запускается поэтапно.</h2>
-            <p>Если вам подходит подписка, оставьте заявку в wait-list — мы пригласим вас сразу после открытия доступа.</p>
-            <a class="waitlist-action" href="#" data-lead-trigger><span>Попасть в wait-list</span><span aria-hidden="true">→</span></a>
-          </div>
-          <div class="cloud-storage-visual"><img src="assets/images/cloud-storage.png" alt="Облачное хранилище Executive AI" /></div>
+        <div class="offer-demo">
+          <p>Сначала попробуйте Executive AI в Telegram.</p>
+          <a class="demo-link" href="https://t.me/eaidemo_bot?start=WR6UMNZKI1" target="_blank" rel="noopener">Открыть демо-бота <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
 
-    <section class="plans-section" id="pricing" aria-labelledby="plans-title">
-      <div class="plans-inner">
-        <div class="plans-heading">
-          <h2 id="plans-title">
-            Выберите формат<br />
-            под ваши задачи
-          </h2>
-          <p>Прозрачные условия и максимум пользы для вас и вашей команды.</p>
-        </div>
 
-        <div class="plans-grid">
-          <article class="plan-card">
-            <h3>Демо</h3>
-            <p class="plan-copy">Для знакомства<br />с Executive AI</p>
-            <div class="plan-price">0 ₽ <span>/ месяц</span></div>
-            <a class="plan-button demo-button" href="#" data-lead-trigger data-demo-telegram>
-              <span>Запросить демо</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 17 17 7" />
-                <path d="M9 7h8v8" />
-              </svg>
-            </a>
-            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-demo" data-plan-features-toggle>
-              <span>Что входит</span>
-              <span class="plan-features-icon" aria-hidden="true">+</span>
-            </button>
-            <ul class="plan-features" id="plan-features-demo">
-              <li>Онлайн-демонстрация продукта</li>
-              <li>Разбор одного рабочего сценария</li>
-              <li>Ответы на ваши вопросы</li>
-              <li>Рекомендации по внедрению</li>
-              <li>Оценка сценария использования</li>
-            </ul>
-          </article>
 
-          <article class="plan-card">
-            <h3>Personal</h3>
-            <p class="plan-copy">Для индивидуальной работы<br />и экспертов</p>
-            <div class="plan-price">4 900 ₽ <span>/ месяц</span></div>
-            <a class="plan-button" href="#" data-lead-trigger>
-              <span>Начать использовать</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 17 17 7" />
-                <path d="M9 7h8v8" />
-              </svg>
-            </a>
-            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-personal" data-plan-features-toggle>
-              <span>Что входит</span>
-              <span class="plan-features-icon" aria-hidden="true">+</span>
-            </button>
-            <ul class="plan-features" id="plan-features-personal">
-              <li>Безлимитные проекты</li>
-              <li>Безлимитные задачи</li>
-              <li>Безлимитный контекст и память</li>
-              <li>Memory</li>
-              <li>Digest &amp; Analysis</li>
-              <li>Follow &amp; Control</li>
-              <li>Telegram</li>
-              <li>Web Workspace</li>
-              <li>Подключение документов и встреч</li>
-              <li>AI-поиск по контексту</li>
-              <li>Ежедневные digest</li>
-              <li>Регулярные обновления</li>
-            </ul>
-          </article>
 
-          <article class="plan-card">
-            <h3>Pro</h3>
-            <p class="plan-copy">Для бизнеса<br />и управления проектами</p>
-            <div class="plan-price">12 900 ₽ <span>/ месяц</span></div>
-            <a class="plan-button" href="#" data-lead-trigger>
-              <span>Начать использовать</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 17 17 7" />
-                <path d="M9 7h8v8" />
-              </svg>
-            </a>
-            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-pro" data-plan-features-toggle>
-              <span>Что входит</span>
-              <span class="plan-features-icon" aria-hidden="true">+</span>
-            </button>
-            <ul class="plan-features" id="plan-features-pro">
-              <li>Безлимитные проекты</li>
-              <li>Безлимитные задачи</li>
-              <li>Безлимитный контекст и память</li>
-              <li>Memory</li>
-              <li>Digest &amp; Analysis</li>
-              <li>Follow &amp; Control</li>
-              <li>Telegram</li>
-              <li>Web Workspace</li>
-              <li>Подключение документов, встреч и почты</li>
-              <li>Интеграции с CRM, Notion, Google Workspace</li>
-              <li>Пользователи и роли</li>
-              <li>Приоритетная поддержка</li>
-              <li>Расширенная аналитика и отчеты</li>
-              <li>SSO и аудит действий</li>
-            </ul>
-          </article>
-
-          <article class="plan-card">
-            <h3>Custom</h3>
-            <p class="plan-copy">Индивидуальное<br />решение</p>
-            <div class="plan-price custom-price">Индивидуальная стоимость</div>
-            <a class="plan-button" href="#" data-lead-trigger>
-              <span>Обсудить проект</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 17 17 7" />
-                <path d="M9 7h8v8" />
-              </svg>
-            </a>
-            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-custom" data-plan-features-toggle>
-              <span>Что входит</span>
-              <span class="plan-features-icon" aria-hidden="true">+</span>
-            </button>
-            <ul class="plan-features" id="plan-features-custom">
-              <li>Индивидуальная настройка продукта</li>
-              <li>Построение процессов и сценариев</li>
-              <li>Настройка AI-агентов под ваши задачи</li>
-              <li>Интеграции с любыми системами</li>
-              <li>Корпоративное хранилище данных</li>
-              <li>Роли и права доступа</li>
-              <li>Персональный onboarding и обучение</li>
-              <li>Консалтинг по внедрению</li>
-              <li>SLA и приоритетная поддержка</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="plans-security">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M7 11V8a5 5 0 0 1 10 0v3" />
-            <path d="M6.5 11h11A1.5 1.5 0 0 1 19 12.5v6A1.5 1.5 0 0 1 17.5 20h-11A1.5 1.5 0 0 1 5 18.5v-6A1.5 1.5 0 0 1 6.5 11Z" />
-          </svg>
-          <span>Ваши данные принадлежат только вам и не используются для обучения моделей.</span>
-          <a href="#faq-security" data-faq-security-link>
-            <span>Подробнее о безопасности</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 17 17 7" />
-              <path d="M9 7h8v8" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
 
     <section class="comparison-section" aria-labelledby="comparison-title">
       <div class="comparison-inner">
@@ -5237,20 +5173,165 @@ h1 {
       </div>
     </section>
 
+    <section class="plans-section" id="pricing" aria-labelledby="plans-title">
+      <div class="plans-inner">
+        <div class="plans-heading">
+          <h2 id="plans-title">
+            Выберите формат<br />
+            под ваши задачи
+          </h2>
+          <p>Прозрачные условия и максимум пользы для вас и вашей команды.</p>
+        </div>
+
+        <div class="plans-grid">
+          <article class="plan-card">
+            <h3>Демо</h3>
+            <p class="plan-copy">Для знакомства<br />с Executive AI</p>
+            <div class="plan-price">0 ₽ <span>/ месяц</span></div>
+            <a class="plan-button demo-button" href="https://t.me/eaidemo_bot?start=WR6UMNZKI1" data-demo-link target="_blank" rel="noopener">
+              <span>Запросить демо</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-demo" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-demo">
+              <li>Онлайн-демонстрация продукта</li>
+              <li>Разбор одного рабочего сценария</li>
+              <li>Ответы на ваши вопросы</li>
+              <li>Рекомендации по внедрению</li>
+              <li>Оценка сценария использования</li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3>Personal</h3>
+            <p class="plan-copy">Для индивидуальной работы<br />и экспертов</p>
+            <div class="plan-price">4 900 ₽ <span>/ месяц</span></div>
+            <a class="plan-button" href="#" data-lead-trigger>
+              <span>Начать использовать</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-personal" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-personal">
+              <li>Безлимитные проекты</li>
+              <li>Безлимитные задачи</li>
+              <li>Безлимитный контекст и память</li>
+              <li>Memory</li>
+              <li>Digest &amp; Analysis</li>
+              <li>Follow &amp; Control</li>
+              <li>Telegram</li>
+              <li>Web Workspace</li>
+              <li>Подключение документов и встреч</li>
+              <li>AI-поиск по контексту</li>
+              <li>Ежедневные digest</li>
+              <li>Регулярные обновления</li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3>Pro</h3>
+            <p class="plan-copy">Для бизнеса<br />и управления проектами</p>
+            <div class="plan-price">12 900 ₽ <span>/ месяц</span></div>
+            <a class="plan-button" href="#" data-lead-trigger>
+              <span>Начать использовать</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-pro" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-pro">
+              <li>Безлимитные проекты</li>
+              <li>Безлимитные задачи</li>
+              <li>Безлимитный контекст и память</li>
+              <li>Memory</li>
+              <li>Digest &amp; Analysis</li>
+              <li>Follow &amp; Control</li>
+              <li>Telegram</li>
+              <li>Web Workspace</li>
+              <li>Подключение документов, встреч и почты</li>
+              <li>Интеграции с CRM, Notion, Google Workspace</li>
+              <li>Пользователи и роли</li>
+              <li>Приоритетная поддержка</li>
+              <li>Расширенная аналитика и отчеты</li>
+              <li>SSO и аудит действий</li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3>Custom</h3>
+            <p class="plan-copy">Индивидуальное<br />решение</p>
+            <div class="plan-price custom-price">Индивидуальная стоимость</div>
+            <a class="plan-button" href="#" data-lead-trigger>
+              <span>Обсудить проект</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 17 17 7" />
+                <path d="M9 7h8v8" />
+              </svg>
+            </a>
+            <button class="plan-features-toggle" type="button" aria-expanded="false" aria-controls="plan-features-custom" data-plan-features-toggle>
+              <span>Что входит</span>
+              <span class="plan-features-icon" aria-hidden="true">+</span>
+            </button>
+            <ul class="plan-features" id="plan-features-custom">
+              <li>Индивидуальная настройка продукта</li>
+              <li>Построение процессов и сценариев</li>
+              <li>Настройка AI-агентов под ваши задачи</li>
+              <li>Интеграции с любыми системами</li>
+              <li>Корпоративное хранилище данных</li>
+              <li>Роли и права доступа</li>
+              <li>Персональный onboarding и обучение</li>
+              <li>Консалтинг по внедрению</li>
+              <li>SLA и приоритетная поддержка</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="plans-security">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 11V8a5 5 0 0 1 10 0v3" />
+            <path d="M6.5 11h11A1.5 1.5 0 0 1 19 12.5v6A1.5 1.5 0 0 1 17.5 20h-11A1.5 1.5 0 0 1 5 18.5v-6A1.5 1.5 0 0 1 6.5 11Z" />
+          </svg>
+          <span>Ваши данные принадлежат только вам и не используются для обучения моделей.</span>
+          <a href="#faq-security" data-faq-security-link>
+            <span>Подробнее о безопасности</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 17 17 7" />
+              <path d="M9 7h8v8" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <section class="enterprise-section" id="enterprise" aria-labelledby="enterprise-title">
       <div class="enterprise-inner">
         <div class="enterprise-heading">
-          <div class="enterprise-brandline"><img src="assets/images/logo.png" alt=""><h2 id="enterprise-title">Executive AI Custom</h2></div>
-          <p>Локальное развёртывание Executive AI с индивидуальной настройкой под процессы, данные и требования вашей компании.</p>
+          <div class="enterprise-brandline"><img src="assets/images/logo.png" alt=""><h2 id="enterprise-title">Командное внедрение</h2></div>
+          <p>За три недели настраиваем один рабочий процесс и оцениваем результат по согласованным с вами показателям.</p>
         </div>
         <h3 class="enterprise-project-title">Что входит в проект внедрения</h3>
         <div class="enterprise-grid">
-          <article class="enterprise-card"><h4>Аудит компании</h4><p>Изучаем существующие процессы, коммуникации и точки потери эффективности.</p></article>
-          <article class="enterprise-card"><h4>Оцифровка процессов</h4><p>Переводим ключевые управленческие процессы в единый AI-контур.</p></article>
-          <article class="enterprise-card"><h4>Персональная конфигурация</h4><p>Настраиваем Executive AI под структуру компании, роли, команды и сценарии работы.</p></article>
-          <article class="enterprise-card"><h4>Автоматизация процессов</h4><p>Создаем AI-сценарии, которые заменяют ручную операционную работу.</p></article>
-          <article class="enterprise-card"><h4>Интеграция</h4><p>Подключаем CRM, ERP, почту, документы, мессенджеры и внутренние сервисы.</p></article>
-          <article class="enterprise-card"><h4>Обучение команды</h4><p>Помогаем сотрудникам встроить Executive AI в ежедневную работу.</p></article>
+          <article class="enterprise-card"><h4>Рабочий процесс</h4><p>Выбираем один процесс, проектный портфель или клиентское направление и фиксируем его ключевые события.</p></article>
+          <article class="enterprise-card"><h4>Подключение источников</h4><p>Соединяем согласованные рабочие источники с Executive AI и определяем границы доступа.</p></article>
+          <article class="enterprise-card"><h4>Память решений</h4><p>Сохраняем решения, их причины, договорённости, ответственных и сроки.</p></article>
+          <article class="enterprise-card"><h4>Роли и доступы</h4><p>Настраиваем роли людей и агентов, чтобы каждый работал с разрешённым контекстом.</p></article>
+          <article class="enterprise-card"><h4>Измеримый результат</h4><p>Выбираем 3–5 показателей в первые два рабочих дня и сравниваем результат с исходным состоянием.</p></article>
+          <article class="enterprise-card"><h4>Работа команды</h4><p>Встраиваем Executive AI в ежедневную работу и передаём команде понятные правила использования.</p></article>
         </div>
         <div class="enterprise-support">
           <div><h3>Личное сопровождение Дениса Дворянкина</h3><p>Каждый проект курируется лично основателем Executive AI — от аудита и стратегии до внедрения и измерения результатов.</p></div>
@@ -5259,26 +5340,7 @@ h1 {
       </div>
     </section>
 
-    <section class="subscription-section" id="subscription" aria-labelledby="subscription-title">
-      <div class="subscription-inner">
-        <div class="subscription-main">
-          <div class="subscription-copy">
-            <img class="subscription-brand-mark" src="assets/images/logo.png" alt="" />
-            <h2 id="subscription-title">Вместе с Executive AI</h2>
-            <p class="subscription-lede">Вы получаете доступ к ведущим AI-моделям, включая OpenAI, Claude и Gemini, внутри единого рабочего пространства.</p>
-          </div>
-          <div class="subscription-benefits" aria-label="Преимущества подписки">
-            <article class="subscription-benefit"><h3>Без зарубежных карт</h3><p>Доступ к AI-моделям без иностранных способов оплаты и сложных отдельных подписок.</p></article>
-            <article class="subscription-benefit"><h3>До 90% экономии</h3><p>Используйте модели внутри Executive AI и экономьте по сравнению с несколькими прямыми подписками.</p></article>
-            <article class="subscription-benefit"><h3>Выбор модели под задачу</h3><p>Переключайтесь между доступными моделями прямо в Executive AI, не меняя рабочий процесс.</p></article>
-          </div>
-        </div>
-        <div class="subscription-footer">
-          <div class="subscription-early"><h3>Доступно ранним пользователям</h3><p>Специальные условия и закрытый доступ для команд, которые начинают внедрение раньше других.</p></div>
-          <a class="subscription-action" href="#pricing"><span>Выбрать тариф</span><span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </section>
+
 
     <section class="results-section" id="results" aria-labelledby="results-title">
       <div class="results-inner">
@@ -5301,7 +5363,7 @@ h1 {
               Я снова фокусируюсь на стратегии, а не на ручном управлении.
             </p>
             <div class="case-person">
-              <img class="person-avatar" src="assets/images/people/placeholder.svg" alt="Маргарита Пиринен" />
+              <span class="person-avatar is-margarita"><img src="assets/images/cases/margarita-pirinen-portrait.png" alt="Маргарита Пиринен" width="44" height="44" loading="lazy" /></span>
               <span>
                 <span class="person-name">Маргарита Пиринен</span>
                 <span class="person-role">CEO Insighters</span>
@@ -5340,62 +5402,122 @@ h1 {
           </p>
         </div>
 
-        <div class="reviews-grid">
-          <article class="review-card">
-            <img class="review-avatar" src="assets/images/people/placeholder.svg" alt="Алексей" />
-            <div class="review-quote-mark" aria-hidden="true">“</div>
-            <blockquote>
-              Executive AI закрыл то, чего нам не хватало — вся операционка в одном месте.
-              Теперь я не тушу задачи, а двигаю компанию вперед.
-            </blockquote>
-            <div class="review-name">Алексей</div>
+        <div class="project-cases-heading" id="project-cases">
+          <h3>Executive AI в проектах</h3>
+        </div>
+        <div class="reviews-grid project-cases-grid" aria-label="Кейсы применения Executive AI" tabindex="0">
+          <article class="review-card project-case" data-case="9" aria-labelledby="project-case-9">
+            <div class="project-case-person">
+              <span class="project-avatar "><img src="assets/images/denis-dvoryankin.webp" alt="" loading="lazy" width="64" height="64" /></span>
+              <div><h3 class="project-case-name" id="project-case-9">Денис Дворянкин</h3><div class="project-case-role">Основатель Executive AI</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Структурирует запросы клиентов и организаций, помогает готовить рабочие материалы.</li>
+                <li>Фиксирует идеи и переводит обсуждения в задачи для команды.</li>
+                <li>Помогает отслеживать сроки и выполнение задач по проектам.</li>
+                <li>Помогает разбирать технические вопросы и готовить рабочие пояснения.</li>
+            </ul>
           </article>
-          <article class="review-card">
-            <img class="review-avatar" src="assets/images/people/placeholder.svg" alt="Мария" />
-            <div class="review-quote-mark" aria-hidden="true">“</div>
-            <blockquote>
-              Раньше теряли решения в чатах и таблицах. С Executive AI все договоренности,
-              задачи и статусы в одном месте. Наконец-то есть полная картина.
-            </blockquote>
-            <div class="review-name">Мария</div>
+          <article class="review-card project-case" data-case="4" aria-labelledby="project-case-4">
+            <div class="project-case-person">
+              <span class="project-avatar is-logo is-light"><img src="assets/images/cases/bios.png" alt="" loading="lazy" width="64" height="64" /></span>
+              <div><h3 class="project-case-name" id="project-case-4">BIOS</h3><div class="project-case-role">Система управления здоровьем</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Служит технологической основой BIOS и встроенной AI-системы.</li>
+                <li>Обеспечивает работу с контекстом медицинских документов и истории наблюдений.</li>
+                <li>Поддерживает структурирование и сохранение накопленной информации во времени.</li>
+                <li>Позволяет готовить ответы с учётом предыдущих документов и наблюдений.</li>
+            </ul>
           </article>
-          <article class="review-card">
-            <img class="review-avatar" src="assets/images/people/placeholder.svg" alt="Игорь" />
-            <div class="review-quote-mark" aria-hidden="true">“</div>
-            <blockquote>
-              Сэкономил себе несколько часов каждый день. Executive AI собирает статусы
-              и показывает, где что стоит — без лишних встреч и запросов.
-            </blockquote>
-            <div class="review-name">Игорь</div>
+          <article class="review-card project-case" data-case="7" aria-labelledby="project-case-7">
+            <div class="project-case-person">
+              <span class="project-avatar "><img src="assets/images/cases/anna-minakova.webp" alt="" loading="lazy" width="64" height="64" /></span>
+              <div><h3 class="project-case-name" id="project-case-7">Анна Минакова</h3><div class="project-case-role">MetaBuild и экспертный контент</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Помогает в разработке MetaBuild — проекта в сфере строительства и цифрового сопровождения объектов недвижимости.</li>
+                <li>Предлагает темы интервью и выпусков подкаста.</li>
+                <li>Готовит вопросы для гостей.</li>
+                <li>Собирает структуру выпусков и сопутствующих материалов.</li>
+                <li>Предлагает идеи публикаций и дальнейшего продвижения выпусков.</li>
+            </ul>
           </article>
-          <article class="review-card">
-            <img class="review-avatar" src="assets/images/people/placeholder.svg" alt="Екатерина" />
-            <div class="review-quote-mark" aria-hidden="true">“</div>
-            <blockquote>
-              Стало проще управлять командой — все фокусируются на важном,
-              а ничего не теряется по пути. Очень помогает держать ритм.
-            </blockquote>
-            <div class="review-name">Екатерина</div>
+          <article class="review-card project-case" data-case="3" aria-labelledby="project-case-3">
+            <div class="project-case-person">
+              <span class="project-avatar is-logo is-gate"><img src="assets/images/cases/gate.png" alt="" loading="lazy" width="64" height="64" /></span>
+              <div><h3 class="project-case-name" id="project-case-3">GATE</h3><div class="project-case-role">Международный альянс</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Переводит и адаптирует рабочие сообщения для участников, говорящих на разных языках.</li>
+                <li>Структурирует многоязычные обсуждения с сохранением смысла.</li>
+                <li>Выделяет из обсуждений задачи и договорённости.</li>
+                <li>Сохраняет общий контекст проекта для международной команды.</li>
+            </ul>
           </article>
-          <article class="review-card">
-            <img class="review-avatar" src="assets/images/people/placeholder.svg" alt="Дмитрий" />
-            <div class="review-quote-mark" aria-hidden="true">“</div>
-            <blockquote>
-              Запуск проектов стал быстрее и прозрачнее. Executive AI помогает не упустить детали
-              и держать все под контролем.
-            </blockquote>
-            <div class="review-name">Дмитрий</div>
+          <article class="review-card project-case" data-case="6" aria-labelledby="project-case-6">
+            <div class="project-case-person">
+              <span class="project-avatar is-logo is-makeitsense"><img src="assets/images/cases/make-it-sense.png" alt="" loading="lazy" width="64" height="64" /></span>
+              <div><h3 class="project-case-name" id="project-case-6">Make It Sense</h3><div class="project-case-role">Юлия Сергеева<br />PR-специалист и организатор мероприятий</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Помогает планировать и организовывать мероприятия.</li>
+                <li>Помогает координировать задачи команды при подготовке мероприятий.</li>
+                <li>Помогает готовить отчётность по проведённым мероприятиям.</li>
+                <li>Отбирает инфоповоды о брендах, PR и репутации, предлагает темы и ракурсы публикаций.</li>
+                <li>Структурирует идеи с учётом аудитории и позиционирования проекта.</li>
+            </ul>
           </article>
-          <article class="review-card">
-            <img class="review-avatar" src="assets/images/people/placeholder.svg" alt="Анна" />
-            <div class="review-quote-mark" aria-hidden="true">“</div>
-            <blockquote>
-              Нравится, что Executive AI не просто напоминает, а реально помогает принимать
-              решения на основе контекста и данных.
-            </blockquote>
-            <div class="review-name">Анна</div>
+          <article class="review-card project-case" data-case="1" aria-labelledby="project-case-1">
+            <div class="project-case-person">
+              <span class="project-avatar is-tatiana"><img src="assets/images/cases/tatiana-kuznetsova.png" alt="" loading="lazy" width="64" height="64" /></span>
+              <div><h3 class="project-case-name" id="project-case-1">Татьяна Кузнецова</h3><div class="project-case-role">Бизнес-советник собственников</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Помогает клиентам сформулировать запрос и уточнить, какой результат они хотят получить.</li>
+                <li>Помогает Татьяне обрабатывать документы клиентов: структурирует информацию и выделяет ключевые вопросы для дальнейшей работы.</li>
+                <li>Служит технологической основой продукта, разработанного по авторской методологии Татьяны.</li>
+                <li>Структурирует программу закрытой управленческой Q&amp;A-сессии.</li>
+                <li>Формулирует ценность мероприятия для собственников и руководителей.</li>
+                <li>Готовит варианты приглашений и анонсов.</li>
+                <li>Адаптирует экспертные тезисы под задачи аудитории.</li>
+            </ul>
+          </article>
+          <article class="review-card project-case" data-case="10" aria-labelledby="project-case-10">
+            <div class="project-case-person">
+              <span class="project-avatar is-logo"><img src="assets/images/cases/one-studio.png" alt="" loading="lazy" width="64" height="64" /></span>
+              <div><h3 class="project-case-name" id="project-case-10">One Studio</h3><div class="project-case-role">Студия дизайна и ремонта</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Структурирует пожелания клиентов и рабочие материалы по проектам.</li>
+                <li>Фиксирует договорённости и изменения, обсуждавшиеся с заказчиками.</li>
+                <li>Помогает координировать задачи команды по дизайну и ремонту.</li>
+                <li>Помогает отслеживать сроки и готовить сводки о ходе работ.</li>
+            </ul>
+          </article>
+          <article class="review-card project-case" data-case="11" aria-labelledby="project-case-11">
+            <div class="project-case-person">
+              <span class="project-avatar is-insighters" aria-hidden="true"><span class="insighters-wordmark">INSIGHTERS</span></span>
+              <div><h3 class="project-case-name" id="project-case-11">INSIGHTERS</h3><div class="project-case-role">Маркетинг и развитие бизнеса</div></div>
+            </div>
+            <p class="project-case-label">Что делает Executive AI</p>
+            <ul class="project-case-list">
+                <li>Собирает задачи и договорённости по всем проектам агентства в единый рабочий контекст.</li>
+                <li>Фиксирует ответственных, сроки и следующие шаги после обсуждений с командой и клиентами.</li>
+                <li>Помогает отслеживать статусы задач и напоминает о приближающихся дедлайнах.</li>
+                <li>Готовит сводки по проектам: что выполнено, что задерживается и где требуется решение руководителя.</li>
+                <li>Помогает Маргарите планировать рабочий день и готовиться к встречам с учётом текущих задач.</li>
+            </ul>
           </article>
         </div>
+
       </div>
     </section>
 
@@ -5587,7 +5709,7 @@ h1 {
           <p class="footer-copy">Операционный AI-агент для управления решениями, задачами и рабочим контекстом команды.</p>
         </div>
         <div class="footer-columns">
-          <section class="footer-column"><h2>Главная</h2><nav aria-label="Разделы главной страницы"><a href="#hero">Обзор</a><a href="#problem">Задачи руководителя</a><a href="#features">Возможности</a><a href="#audience">Для кого</a><a href="#results">Результаты</a><a href="#reviews">Отзывы</a><a href="#deployment">Варианты подключения</a><a href="#subscription">Подписка и модели</a></nav></section>
+          <section class="footer-column"><h2>Главная</h2><nav aria-label="Разделы главной страницы"><a href="#hero">Обзор</a><a href="#problem">Задачи руководителя</a><a href="#features">Возможности</a><a href="#audience">Для кого</a><a href="#results">Результаты</a><a href="#reviews">Отзывы</a><a href="#deployment">Варианты подключения</a></nav></section>
           <section class="footer-column"><h2>Продукт</h2><nav aria-label="Продукт"><a href="product-pages/product.html">Обзор продукта</a><a href="product-pages/how-it-works.html">Как это работает</a><a href="product-pages/functions.html">Рабочие сценарии</a><a href="product-pages/integrations.html">Интеграции</a><a href="product-pages/technology.html">Технология</a><a href="product-pages/security.html">Безопасность</a><a href="product-pages/compare.html">Сравнение</a><a href="product-pages/pilot.html">Пилот</a></nav></section>
           <section class="footer-column"><h2>Возможности</h2><nav aria-label="Возможности"><a href="product-pages/business-memory.html">Business Memory</a><a href="product-pages/digest-analysis.html">Digest &amp; Analysis</a><a href="product-pages/follow-control.html">Follow &amp; Control</a></nav></section>
           <section class="footer-column"><h2>Для кого</h2><nav aria-label="Для кого"><a href="for-pages/for.html">Все решения</a><a href="for-pages/for-ceo.html">CEO</a><a href="for-pages/for-heads.html">Руководители</a><a href="for-pages/for-team.html">Команды</a><a href="for-pages/for-project-teams.html">Проектные команды</a><a href="for-pages/for-operations.html">Операции</a><a href="for-pages/for-consultants.html">Консультанты</a><a href="for-pages/for-enterprise.html">Enterprise</a></nav></section>
@@ -5600,8 +5722,8 @@ h1 {
     <div class="lead-modal" id="lead-modal" aria-hidden="true">
       <div class="lead-dialog" role="dialog" aria-modal="true" aria-labelledby="lead-title">
         <button class="lead-close" type="button" aria-label="Закрыть форму">&times;</button>
-        <h2 class="lead-title" id="lead-title">
-          Запросить демо и узнать возможности <span>Executive AI</span>
+        <h2 class="lead-title" id="lead-title" tabindex="-1">
+          Обсудить внедрение <span>Executive AI</span>
         </h2>
         <form class="lead-form" id="lead-form" action="/api/lead" method="post">
           <label class="field-label">
@@ -5621,17 +5743,26 @@ h1 {
             <textarea name="comment" placeholder="Коротко опишите задачу"></textarea>
           </label>
           <label class="consent-label">
+            <input type="checkbox" name="privacy_acknowledgement" required />
+            <span>Я ознакомлен(а) с <a href="privacy-policy.html" target="_blank" rel="noopener">Политикой обработки персональных данных</a>.</span>
+          </label>
+          <label class="consent-label">
             <input type="checkbox" name="consent" required />
             <span>
-              Я принимаю
-              <a href="privacy-policy.html" target="_blank" rel="noopener">Политику конфиденциальности</a>
-              и даю
-              <a href="personal-data-consent.html" target="_blank" rel="noopener">Согласие на обработку персональных данных</a>
+              Даю
+              <a href="personal-data-consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a>.
             </span>
           </label>
           <button class="lead-submit" type="submit">Отправить заявку</button>
           <p class="lead-status" role="status" aria-live="polite"></p>
         </form>
+        <div class="lead-success" id="lead-success" hidden>
+          <span class="lead-success-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" /></svg>
+          </span>
+          <p role="status">Спасибо! Мы получили вашу заявку и свяжемся с вами. А пока попробуйте Executive AI в Telegram.</p>
+          <a class="primary-btn lead-success-demo" href="https://t.me/eaidemo_bot?start=WR6UMNZKI1" data-demo-link target="_blank" rel="noopener">Попробовать в Telegram</a>
+        </div>
       </div>
     </div>
 
@@ -5734,7 +5865,8 @@ h1 {
             '.feature-section .feature-visual',
             '.feature-section .visual-card',
             '.sources-section h2',
-            '.sources-section .sources-marquee-row',
+            // Observe the viewport-wide mask; full marquee rows exceed mobile intersection thresholds.
+            '.sources-section .sources-marquees',
             '.unified-section h2',
             '.unified-section .integration-stage',
             '.plans-section h2',
@@ -5777,6 +5909,7 @@ h1 {
             && !element.closest('.integration-card')
             && !element.closest('.connector')
             && !element.closest('.app-track .app-icon')
+            && !element.closest('.project-case')
             && !heroTargets.includes(element)
           ));
 
@@ -6258,10 +6391,11 @@ h1 {
         const status = form ? form.querySelector('.lead-status') : null;
         const submitButton = form ? form.querySelector('.lead-submit') : null;
         const closeButton = modal ? modal.querySelector('.lead-close') : null;
-        const modalTriggers = document.querySelectorAll('.header-cta, .primary-btn, .text-btn, .secondary-link, .learn-btn, .plan-button, .final-primary, .final-link, [data-lead-trigger]');
-        const demoTelegramUrl = 'https://t.me/ExecutiveAIDemoBot?start=WR6UMNZKI1';
-        const defaultSubmitLabel = submitButton?.textContent || 'Отправить заявку';
-        let isDemoTelegramFlow = false;
+        const modalTriggers = document.querySelectorAll('.header-cta, .primary-btn:not([data-demo-link]), .text-btn, .secondary-link, .learn-btn, .plan-button:not([data-demo-link]), .final-primary, .final-link, [data-lead-trigger]');
+        const modalTitle = modal ? modal.querySelector('#lead-title') : null;
+        const successPanel = modal ? modal.querySelector('#lead-success') : null;
+        let selectedProduct = '';
+        let isSubmitting = false;
 
         function setModalOpen(isOpen) {
           if (!modal) return;
@@ -6269,6 +6403,8 @@ h1 {
           modal.setAttribute('aria-hidden', String(!isOpen));
           document.body.classList.toggle('modal-open', isOpen);
           if (isOpen) {
+            if (form) form.hidden = false;
+            if (successPanel) successPanel.hidden = true;
             const firstInput = modal.querySelector('input[name="name"]');
             window.setTimeout(() => firstInput?.focus(), 120);
           }
@@ -6300,13 +6436,13 @@ h1 {
         modalTriggers.forEach((trigger) => {
           trigger.addEventListener('click', (event) => {
             event.preventDefault();
-            isDemoTelegramFlow = trigger.matches('[data-demo-telegram]');
-            if (submitButton) {
-              submitButton.textContent = isDemoTelegramFlow
-                ? 'Получить демо в Telegram'
-                : defaultSubmitLabel;
+            selectedProduct = trigger.dataset.product || '';
+            if (modalTitle) {
+              modalTitle.textContent = selectedProduct
+                ? `Обсудить ${selectedProduct === 'AI Native Setup' ? 'AI Native Setup' : 'командное внедрение'}`
+                : 'Обсудить внедрение Executive AI';
             }
-            if (status) status.textContent = '';
+            if (status && !isSubmitting) status.textContent = '';
             setModalOpen(true);
           });
         });
@@ -6340,10 +6476,10 @@ h1 {
 
         form?.addEventListener('submit', async (event) => {
           event.preventDefault();
-          if (!form.reportValidity()) return;
+          if (isSubmitting || !form.reportValidity()) return;
+          isSubmitting = true;
 
           const submit = form.querySelector('.lead-submit');
-          const shouldOpenDemoTelegram = isDemoTelegramFlow;
           const data = new FormData(form);
           const payload = {
             name: String(data.get('name') || '').trim(),
@@ -6351,8 +6487,8 @@ h1 {
             telegram: String(data.get('telegram') || '').trim(),
             comment: String(data.get('comment') || '').trim(),
             consent: Boolean(data.get('consent')),
-            source: shouldOpenDemoTelegram
-              ? 'Executive AI landing — Demo tariff'
+            source: selectedProduct
+              ? `Executive AI landing — ${selectedProduct}`
               : 'Executive AI landing',
           };
 
@@ -6367,15 +6503,17 @@ h1 {
             });
             if (!response.ok) throw new Error('Request failed');
             form.reset();
-            if (shouldOpenDemoTelegram) {
-              if (status) status.textContent = 'Заявка сохранена. Открываем Telegram...';
-              window.location.assign(demoTelegramUrl);
-            } else if (status) {
-              status.textContent = 'Спасибо, заявка отправлена.';
+            if (status) status.textContent = '';
+            form.hidden = true;
+            if (successPanel) successPanel.hidden = false;
+            if (modalTitle) {
+              modalTitle.textContent = 'Заявка отправлена';
+              if (modal.classList.contains('is-open')) modalTitle.focus();
             }
           } catch (error) {
             if (status) status.textContent = 'Не удалось отправить. Попробуйте еще раз.';
           } finally {
+            isSubmitting = false;
             if (submit) submit.disabled = false;
           }
         });
