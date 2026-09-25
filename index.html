@@ -4611,6 +4611,21 @@ h1 {
 .lead-success-check svg { width: 30px; height: 30px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .lead-success p { margin: 0; color: rgba(246,247,249,.8); font-size: 16px; line-height: 1.5; }
 .lead-success-demo { justify-self: center; max-width: 100%; padding: 12px 24px; background: var(--cyan); white-space: normal; }
+
+/* Consistent action sizing and contextual lead forms. */
+.hero-actions .primary-btn { min-height: 54px; padding: 12px 28px; line-height: 1.25; text-align: center; }
+.hero-actions .text-btn { min-height: 54px; }
+.lead-dialog { overflow-y: auto; overscroll-behavior: contain; }
+.lead-title { margin-bottom: 12px; }
+.lead-intro { margin: 0 0 20px; color: rgba(246,247,249,.7); font-size: 15px; line-height: 1.5; }
+.lead-intro[hidden] { display: none; }
+.lead-submit { height: auto; min-height: 52px; padding: 12px 24px; border-radius: 999px; line-height: 1.25; }
+.lead-success-demo { min-height: 52px; }
+.plan-button:focus-visible, .deployment-action:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+@media (max-width: 760px) {
+  .lead-dialog { width: min(calc(100vw - 32px), 430px); }
+  .lead-intro { margin-bottom: 16px; font-size: 14px; }
+}
     </style>
   </head>
   <body>
@@ -4630,7 +4645,7 @@ h1 {
 
       <nav class="nav-links" id="site-nav" aria-label="Основные разделы"><a href="index.html" aria-current="page">Главная</a><a href="product-pages/product.html">Продукт</a><a href="for-pages/for.html">Для кого</a><a href="product-pages/integrations.html">Интеграции</a><a href="product-pages/security.html">Безопасность</a><a href="#results">Результаты</a><div class="mobile-nav-details"><section class="mobile-nav-group"><h2>Главная</h2><nav><a href="index.html#hero">Обзор</a><a href="index.html#results">Результаты</a><a href="index.html#reviews">Отзывы</a><a href="index.html#deployment">Варианты подключения</a></nav></section><section class="mobile-nav-group"><h2>Продукт</h2><nav><a href="product-pages/product.html">Обзор продукта</a><a href="product-pages/how-it-works.html">Как это работает</a><a href="product-pages/functions.html">Рабочие сценарии</a><a href="product-pages/integrations.html">Интеграции</a><a href="product-pages/technology.html">Технология</a><a href="product-pages/security.html">Безопасность</a><a href="product-pages/compare.html">Сравнение</a><a href="product-pages/pilot.html">Пилот</a></nav></section><section class="mobile-nav-group"><h2>Возможности</h2><nav><a href="product-pages/business-memory.html">Business Memory</a><a href="product-pages/digest-analysis.html">Digest &amp; Analysis</a><a href="product-pages/follow-control.html">Follow &amp; Control</a></nav></section><section class="mobile-nav-group"><h2>Для кого</h2><nav><a href="for-pages/for.html">Все решения</a><a href="for-pages/for-ceo.html">CEO</a><a href="for-pages/for-heads.html">Руководители</a><a href="for-pages/for-team.html">Команды</a><a href="for-pages/for-project-teams.html">Проектные команды</a><a href="for-pages/for-operations.html">Операции</a><a href="for-pages/for-consultants.html">Консультанты</a><a href="for-pages/for-enterprise.html">Enterprise</a></nav></section><section class="mobile-nav-group"><h2>Компания</h2><nav><a href="denis-dvoryankin.html">Денис Дворянкин</a><a href="privacy-policy.html">Конфиденциальность</a><a href="personal-data-consent.html">Обработка данных</a></nav></section><a class="mobile-nav-cta" href="index.html#deployment"><span>Запросить пилот</span><span aria-hidden="true">→</span></a></div></nav>
 
-      <a class="header-cta" href="#">Обсудить внедрение</a>
+      <a class="header-cta" href="#" data-lead-intent="implementation">Обсудить внедрение</a>
     </header>
 
     <main class="hero" id="hero">
@@ -4648,7 +4663,7 @@ h1 {
 
         <div class="hero-actions motion-reveal">
           <a class="primary-btn" href="https://t.me/eaidemo_bot?start=WR6UMNZKI1" data-demo-link target="_blank" rel="noopener">Попробовать демо в Telegram</a>
-          <a class="text-btn" href="#">
+          <a class="text-btn" href="#" data-lead-intent="consultation">
             <span>Получить консультацию</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M7 17 17 7" />
@@ -4996,7 +5011,7 @@ h1 {
               <li>Работа через Telegram и Web</li>
               <li>Не требуется собственная инфраструктура</li>
             </ul>
-            <a class="deployment-action is-cloud" href="#" data-lead-trigger><span>Начать использовать</span><span aria-hidden="true">→</span></a>
+            <a class="deployment-action is-cloud" href="#" data-lead-trigger data-lead-intent="cloud"><span>Начать использовать</span><span aria-hidden="true">→</span></a>
           </article>
 
           <article class="deployment-card">
@@ -5011,7 +5026,7 @@ h1 {
               <li>Развёртывание внутри вашей инфраструктуры</li>
               <li>Индивидуальная настройка под процессы компании</li>
             </ul>
-            <a class="deployment-action is-enterprise" href="#" data-lead-trigger><span>Обсудить внедрение</span><span aria-hidden="true">→</span></a>
+            <a class="deployment-action is-enterprise" href="#" data-lead-trigger data-lead-intent="custom"><span>Обсудить внедрение</span><span aria-hidden="true">→</span></a>
           </article>
         </div>
         <div class="deployment-note">
@@ -5188,7 +5203,7 @@ h1 {
             <h3>Демо</h3>
             <p class="plan-copy">Для знакомства<br />с Executive AI</p>
             <div class="plan-price">0 ₽ <span>/ месяц</span></div>
-            <a class="plan-button demo-button" href="https://t.me/eaidemo_bot?start=WR6UMNZKI1" data-demo-link target="_blank" rel="noopener">
+            <a class="plan-button demo-button" href="#" data-lead-trigger data-lead-intent="demo">
               <span>Запросить демо</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 17 17 7" />
@@ -5212,7 +5227,7 @@ h1 {
             <h3>Personal</h3>
             <p class="plan-copy">Для индивидуальной работы<br />и экспертов</p>
             <div class="plan-price">4 900 ₽ <span>/ месяц</span></div>
-            <a class="plan-button" href="#" data-lead-trigger>
+            <a class="plan-button" href="#" data-lead-trigger data-lead-intent="personal">
               <span>Начать использовать</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 17 17 7" />
@@ -5243,7 +5258,7 @@ h1 {
             <h3>Pro</h3>
             <p class="plan-copy">Для бизнеса<br />и управления проектами</p>
             <div class="plan-price">12 900 ₽ <span>/ месяц</span></div>
-            <a class="plan-button" href="#" data-lead-trigger>
+            <a class="plan-button" href="#" data-lead-trigger data-lead-intent="pro">
               <span>Начать использовать</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 17 17 7" />
@@ -5276,7 +5291,7 @@ h1 {
             <h3>Custom</h3>
             <p class="plan-copy">Индивидуальное<br />решение</p>
             <div class="plan-price custom-price">Индивидуальная стоимость</div>
-            <a class="plan-button" href="#" data-lead-trigger>
+            <a class="plan-button" href="#" data-lead-trigger data-lead-intent="custom">
               <span>Обсудить проект</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 17 17 7" />
@@ -5687,11 +5702,11 @@ h1 {
           а вы отдыхаете.
         </h2>
         <div class="final-actions">
-          <a class="final-primary" href="#">
+          <a class="final-primary" href="#" data-lead-intent="access">
             <span>Получить доступ</span>
             <span aria-hidden="true">→</span>
           </a>
-          <a class="final-link" href="#">
+          <a class="final-link" href="#features">
             <span>Подробнее</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M7 17 17 7" />
@@ -5720,11 +5735,12 @@ h1 {
     </footer>
 
     <div class="lead-modal" id="lead-modal" aria-hidden="true">
-      <div class="lead-dialog" role="dialog" aria-modal="true" aria-labelledby="lead-title">
+      <div class="lead-dialog" role="dialog" aria-modal="true" aria-labelledby="lead-title" aria-describedby="lead-intro">
         <button class="lead-close" type="button" aria-label="Закрыть форму">&times;</button>
         <h2 class="lead-title" id="lead-title" tabindex="-1">
           Обсудить внедрение <span>Executive AI</span>
         </h2>
+        <p class="lead-intro" id="lead-intro">Обсудим ваши задачи и подходящий формат подключения.</p>
         <form class="lead-form" id="lead-form" action="/api/lead" method="post">
           <label class="field-label">
             Имя
@@ -6384,140 +6400,6 @@ h1 {
           finalSection?.classList.add('is-visible');
         }
 
-        const modal = document.querySelector('#lead-modal');
-        const form = document.querySelector('#lead-form');
-        const phoneInput = form ? form.querySelector('input[name="phone"]') : null;
-        const telegramInput = form ? form.querySelector('input[name="telegram"]') : null;
-        const status = form ? form.querySelector('.lead-status') : null;
-        const submitButton = form ? form.querySelector('.lead-submit') : null;
-        const closeButton = modal ? modal.querySelector('.lead-close') : null;
-        const modalTriggers = document.querySelectorAll('.header-cta, .primary-btn:not([data-demo-link]), .text-btn, .secondary-link, .learn-btn, .plan-button:not([data-demo-link]), .final-primary, .final-link, [data-lead-trigger]');
-        const modalTitle = modal ? modal.querySelector('#lead-title') : null;
-        const successPanel = modal ? modal.querySelector('#lead-success') : null;
-        let selectedProduct = '';
-        let isSubmitting = false;
-
-        function setModalOpen(isOpen) {
-          if (!modal) return;
-          modal.classList.toggle('is-open', isOpen);
-          modal.setAttribute('aria-hidden', String(!isOpen));
-          document.body.classList.toggle('modal-open', isOpen);
-          if (isOpen) {
-            if (form) form.hidden = false;
-            if (successPanel) successPanel.hidden = true;
-            const firstInput = modal.querySelector('input[name="name"]');
-            window.setTimeout(() => firstInput?.focus(), 120);
-          }
-        }
-
-        function formatPhone(value) {
-          let digits = value.replace(/\D/g, '');
-          if (!digits) return '';
-          if (digits[0] === '8') digits = `7${digits.slice(1)}`;
-          if (digits[0] !== '7') digits = `7${digits}`;
-          digits = digits.slice(0, 11);
-          const local = digits.slice(1);
-          let formatted = '+7';
-          if (local.length > 0) formatted += ` (${local.slice(0, 3)}`;
-          if (local.length >= 3) formatted += ')';
-          if (local.length > 3) formatted += ` ${local.slice(3, 6)}`;
-          if (local.length > 6) formatted += `-${local.slice(6, 8)}`;
-          if (local.length > 8) formatted += `-${local.slice(8, 10)}`;
-          return formatted;
-        }
-
-        function formatTelegram(value) {
-          const trimmed = value.trim();
-          if (!trimmed) return '';
-          const username = trimmed.replace(/^@+/, '');
-          return username ? `@${username}` : '@';
-        }
-
-        modalTriggers.forEach((trigger) => {
-          trigger.addEventListener('click', (event) => {
-            event.preventDefault();
-            selectedProduct = trigger.dataset.product || '';
-            if (modalTitle) {
-              modalTitle.textContent = selectedProduct
-                ? `Обсудить ${selectedProduct === 'AI Native Setup' ? 'AI Native Setup' : 'командное внедрение'}`
-                : 'Обсудить внедрение Executive AI';
-            }
-            if (status && !isSubmitting) status.textContent = '';
-            setModalOpen(true);
-          });
-        });
-
-        closeButton?.addEventListener('click', () => setModalOpen(false));
-        modal?.addEventListener('click', (event) => {
-          if (event.target === modal) setModalOpen(false);
-        });
-        window.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape') setModalOpen(false);
-        });
-
-        phoneInput?.addEventListener('focus', () => {
-          if (!phoneInput.value.trim()) phoneInput.value = '+7 ';
-        });
-        phoneInput?.addEventListener('input', () => {
-          phoneInput.value = formatPhone(phoneInput.value);
-        });
-        phoneInput?.addEventListener('blur', () => {
-          if (phoneInput.value.replace(/\D/g, '') === '7') phoneInput.value = '';
-        });
-
-        telegramInput?.addEventListener('input', () => {
-          const formatted = formatTelegram(telegramInput.value);
-          telegramInput.value = formatted;
-          telegramInput.setSelectionRange(formatted.length, formatted.length);
-        });
-        telegramInput?.addEventListener('blur', () => {
-          if (telegramInput.value === '@') telegramInput.value = '';
-        });
-
-        form?.addEventListener('submit', async (event) => {
-          event.preventDefault();
-          if (isSubmitting || !form.reportValidity()) return;
-          isSubmitting = true;
-
-          const submit = form.querySelector('.lead-submit');
-          const data = new FormData(form);
-          const payload = {
-            name: String(data.get('name') || '').trim(),
-            phone: String(data.get('phone') || '').trim(),
-            telegram: String(data.get('telegram') || '').trim(),
-            comment: String(data.get('comment') || '').trim(),
-            consent: Boolean(data.get('consent')),
-            source: selectedProduct
-              ? `Executive AI landing — ${selectedProduct}`
-              : 'Executive AI landing',
-          };
-
-          if (submit) submit.disabled = true;
-          if (status) status.textContent = 'Отправляем заявку...';
-
-          try {
-            const response = await fetch(form.action, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
-            });
-            if (!response.ok) throw new Error('Request failed');
-            form.reset();
-            if (status) status.textContent = '';
-            form.hidden = true;
-            if (successPanel) successPanel.hidden = false;
-            if (modalTitle) {
-              modalTitle.textContent = 'Заявка отправлена';
-              if (modal.classList.contains('is-open')) modalTitle.focus();
-            }
-          } catch (error) {
-            if (status) status.textContent = 'Не удалось отправить. Попробуйте еще раз.';
-          } finally {
-            isSubmitting = false;
-            if (submit) submit.disabled = false;
-          }
-        });
-
         const section = document.querySelector('.relief-section');
         if (!section) return;
 
@@ -6633,5 +6515,6 @@ h1 {
         requestUpdate();
       })();
     </script>
+    <script src="assets/lead-form.js"></script>
   </body>
 </html>
