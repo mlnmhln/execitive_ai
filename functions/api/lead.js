@@ -28,7 +28,7 @@ export async function onRequestPost({ request, env }) {
   };
   const consent = data.consent === true || data.consent === 'true' || data.consent === 'on';
 
-  if (!lead.name || !lead.phone || !lead.telegram) {
+  if (!lead.name || !lead.phone) {
     return jsonResponse({ success: false, error: 'Обязательные поля не заполнены' }, 422, headers);
   }
 
@@ -191,7 +191,7 @@ function buildEmailMessage(sender, recipients, lead) {
     '',
     `Имя: ${lead.name}`,
     `Телефон: ${lead.phone}`,
-    `Telegram: ${lead.telegram}`,
+    `Telegram: ${lead.telegram || 'Не указан'}`,
     ...(lead.comment ? [`Комментарий: ${lead.comment}`] : []),
     `Источник: ${lead.source}`,
     `Дата и время: ${lead.submittedAt} (МСК)`,
@@ -221,7 +221,7 @@ async function duplicateToTelegram(env, lead) {
     '🚀 *Новая заявка — Executive AI*\n\n' +
     `👤 *Имя:* ${escapeMarkdown(lead.name)}\n` +
     `📞 *Телефон:* ${escapeMarkdown(lead.phone)}\n` +
-    `💬 *Telegram:* ${escapeMarkdown(lead.telegram)}\n` +
+    `💬 *Telegram:* ${escapeMarkdown(lead.telegram || 'Не указан')}\n` +
     (lead.comment ? `💬 *Комментарий:* ${escapeMarkdown(lead.comment)}\n` : '') +
     `📍 *Источник:* ${escapeMarkdown(lead.source)}\n` +
     `🕒 ${escapeMarkdown(lead.submittedAt)} МСК`;
